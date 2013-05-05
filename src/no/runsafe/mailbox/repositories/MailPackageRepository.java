@@ -39,7 +39,11 @@ public class MailPackageRepository extends Repository
 		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
 
 		Map<String, Object> data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
-		if (data != null) return (Integer) data.get("ID");
+		if (data != null)
+		{
+			long ID = (Long) data.get("ID");
+			return (int) ID;
+		}
 
 		return 0;
 	}
