@@ -20,18 +20,16 @@ public class SendMail extends PlayerCommand
 	{
 		RunsafePlayer player = RunsafeServer.Instance.getPlayer(parameters.get("player"));
 
-		if (player != null)
-		{
-			if (this.mailHandler.hasFreeMailboxSpace(player))
-				this.mailHandler.openMailSender(executor, player);
-			else
-				executor.sendColouredMessage("&cThat player cannot receive mail right now.");
-		}
-		else
-		{
-			executor.sendColouredMessage(String.format("&cThe player %s does not exist.", parameters.get("player")));
-		}
+		if (player == null)
+			return "&cThat player does not exist.";
 
+		if (player.getName().equals(executor.getName()))
+			return "&cYou cannot send mail to yourself.";
+
+		if (!this.mailHandler.hasFreeMailboxSpace(player))
+			return "&cThat player cannot receive mail right now.";
+
+		this.mailHandler.openMailSender(executor, player);
 		return null;
 	}
 
