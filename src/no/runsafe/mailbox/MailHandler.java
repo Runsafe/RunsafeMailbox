@@ -96,7 +96,7 @@ public class MailHandler implements IConfigurationChanged
 		}
 
 		if (hasRemoved)
-			owner.sendColouredMessage("&cYou can't put that there, your items have been dropped on the floor.");
+			owner.sendColouredMessage("&cThe mailbox growls and spits your items onto the floor.");
 
 		this.mailboxRepository.updateMailbox(owner, mailbox);
 	}
