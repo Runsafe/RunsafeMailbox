@@ -28,7 +28,7 @@ public class MailboxRepository extends Repository
 	{
 		String playerName = player.getName();
 		Map<String, Object> data = this.database.QueryRow(
-				"SELECT contents FROM player_mailboxes WHERE playerName = ?", playerName
+				"SELECT contents FROM player_mailboxes WHERE player = ?", playerName
 		);
 
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 27, String.format("%s's Mailbox", playerName));
