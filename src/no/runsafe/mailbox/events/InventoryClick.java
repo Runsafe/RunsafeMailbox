@@ -18,7 +18,7 @@ public class InventoryClick implements IInventoryClick
 		RunsafePlayer player = event.getWhoClicked();
 		if (this.mailHandler.isViewingMailbox(player))
 		{
-			if (event.isLeftClick() || event.isRightClick())
+			if ((event.isLeftClick() || event.isRightClick()) && event.getInventory().getTitle().endsWith("'s Mailbox"))
 			{
 				if (event.getCursor() == null)
 					this.mailHandler.removeItemFromMailbox(player, event.getSlot());
