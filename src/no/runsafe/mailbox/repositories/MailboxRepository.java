@@ -55,7 +55,7 @@ public class MailboxRepository extends Repository
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
 				"CREATE TABLE `player_mailboxes` (" +
-						"`player` varchar(50) NOT NULL," +
+						"`player` varchar(50) NOT NULL AUTO_INCREMENT," +
 						"`contents` longtext," +
 						"PRIMARY KEY (`player`)" +
 				")"
