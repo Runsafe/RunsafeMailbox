@@ -53,13 +53,6 @@ public class MailHandler implements IConfigurationChanged
 		return this.openMailboxes.containsKey(viewer.getName());
 	}
 
-	public void removeItemFromMailbox(RunsafePlayer owner, int slot)
-	{
-		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(owner);
-		mailbox.clear(slot);
-		this.mailboxRepository.updateMailbox(owner, mailbox);
-	}
-
 	public void closeMailbox(RunsafePlayer viewer)
 	{
 		if (this.isViewingMailbox(viewer))
@@ -158,6 +151,7 @@ public class MailHandler implements IConfigurationChanged
 				player.getWorld().dropItem(player.getLocation(), itemStack);
 			}
 		}
+		player.updateInventory();
 
 		if (sendWarning)
 			player.sendColouredMessage("&3Your inventory is full, some of the items from the package have been dropped at your feet.");
