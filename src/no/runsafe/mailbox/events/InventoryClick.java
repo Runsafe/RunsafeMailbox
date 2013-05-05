@@ -18,10 +18,13 @@ public class InventoryClick implements IInventoryClick
 		RunsafePlayer player = event.getWhoClicked();
 		if (this.mailHandler.isViewingMailbox(player))
 		{
-			if (event.getCursor() == null)
-				this.mailHandler.removeItemFromMailbox(player, event.getSlot());
-			else
-				event.setCancelled(true); // Prevent item switching.
+			if (event.isLeftClick() || event.isRightClick())
+			{
+				if (event.getCursor() == null)
+					this.mailHandler.removeItemFromMailbox(player, event.getSlot());
+				else
+					event.setCancelled(true); // Prevent item switching.
+			}
 		}
 	}
 
