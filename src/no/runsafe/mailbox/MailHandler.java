@@ -25,8 +25,16 @@ public class MailHandler implements IConfigurationChanged
 	public void openMailbox(RunsafePlayer viewer, RunsafePlayer mailboxOwner)
 	{
 		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
-		this.openMailboxes.put(viewer.getName(), new MailView(mailboxOwner.getName(), inventory, viewer));
-		viewer.openInventory(inventory);
+
+		if (inventory.getContents().size() > 0)
+		{
+			this.openMailboxes.put(viewer.getName(), new MailView(mailboxOwner.getName(), inventory, viewer));
+			viewer.openInventory(inventory);
+		}
+		else
+		{
+			viewer.sendColouredMessage("&eYour mailbox is empty!");
+		}
 	}
 
 	public boolean hasFreeMailboxSpace(RunsafePlayer mailboxOwner)
@@ -134,6 +142,12 @@ public class MailHandler implements IConfigurationChanged
 			return "&2Mail sent successfully.";
 		}
 		return null;
+	}
+
+	public int getInboxCount(RunsafePlayer player)
+	{
+		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(player);
+		return mailbox.getContents().size();
 	}
 
 	public void openPackage(RunsafePlayer player, int packageID)
