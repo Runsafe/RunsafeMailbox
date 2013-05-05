@@ -23,7 +23,10 @@ public class InventoryClick implements IInventoryClick
 				if (event.getCursor() == null)
 					this.mailHandler.removeItemFromMailbox(player, event.getSlot());
 				else
+				{
+					player.sendColouredMessage(event.getCursor().toString());
 					event.setCancelled(true); // Prevent item switching.
+				}
 			}
 		}
 	}
