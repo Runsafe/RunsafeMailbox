@@ -37,7 +37,7 @@ public class MailHandler implements IConfigurationChanged
 
 	public void openMailSender(RunsafePlayer sender, RunsafePlayer recipient)
 	{
-		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText());
+		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText() + ".");
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "Mail to " + recipient.getName());
 		this.openSendAgents.put(sender.getName(), new MailSendAgent(recipient, inventory));
 		sender.openInventory(inventory);
@@ -51,6 +51,13 @@ public class MailHandler implements IConfigurationChanged
 	public boolean isViewingMailbox(RunsafePlayer viewer)
 	{
 		return this.openMailboxes.containsKey(viewer.getName());
+	}
+
+	public void removeItemFromMailbox(RunsafePlayer owner, int slot)
+	{
+		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(owner);
+		mailbox.clear(slot);
+		this.mailboxRepository.updateMailbox(owner, mailbox);
 	}
 
 	public void closeMailbox(RunsafePlayer viewer)
@@ -79,7 +86,7 @@ public class MailHandler implements IConfigurationChanged
 			{
 				this.returnGoodsFromAgent(sender, agent);
 				this.removeAgent(sender);
-				return "&cYou do not have enough money to send mail. Sending mail costs " + this.getMailCostText();
+				return "&cYou do not have enough money to send mail. Sending mail costs " + this.getMailCostText() + ".";
 			}
 
 			RunsafePlayer recipient = agent.getRecipient();
@@ -167,12 +174,13 @@ public class MailHandler implements IConfigurationChanged
 				int need = this.mailSendCost - currentTaken;
 				if (itemStack.getAmount() <= need)
 				{
-					currentTaken -= itemStack.getAmount();
+					currentTaken += itemStack.getAmount();
 					inventory.remove(itemStack);
 				}
 				else
 				{
 					itemStack.remove(need);
+					currentTaken += need;
 				}
 			}
 		}
