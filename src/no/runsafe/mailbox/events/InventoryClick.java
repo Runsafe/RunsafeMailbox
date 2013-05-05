@@ -4,6 +4,7 @@ import no.runsafe.framework.event.inventory.IInventoryClick;
 import no.runsafe.framework.server.event.inventory.RunsafeInventoryClickEvent;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
+import org.bukkit.Material;
 
 public class InventoryClick implements IInventoryClick
 {
@@ -18,15 +19,12 @@ public class InventoryClick implements IInventoryClick
 		RunsafePlayer player = event.getWhoClicked();
 		if (this.mailHandler.isViewingMailbox(player))
 		{
-			if ((event.isLeftClick() || event.isRightClick()) && event.getInventory().getTitle().endsWith("'s Mailbox"))
+			if (event.getCursor().getItemId() == Material.AIR.getId())
+				this.mailHandler.removeItemFromMailbox(player, event.getSlot());
+			else
 			{
-				if (event.getCursor() == null)
-					this.mailHandler.removeItemFromMailbox(player, event.getSlot());
-				else
-				{
-					player.sendColouredMessage("ItemID: " + event.getCursor().getItemId());
-					event.setCancelled(true); // Prevent item switching.
-				}
+				player.sendColouredMessage("ItemID: " + event.getCursor().getItemId());
+				event.setCancelled(true); // Prevent item switching.
 			}
 		}
 	}
