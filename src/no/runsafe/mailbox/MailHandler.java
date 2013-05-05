@@ -122,7 +122,7 @@ public class MailHandler implements IConfigurationChanged
 
 	public String getMailCostText()
 	{
-		return this.mailSendCost + " " + Material.getMaterial(this.mailSendCurrency).name();
+		return this.mailSendCost + " " + Material.getMaterial(this.mailSendCurrency).name().replace("_", "").toLowerCase();
 	}
 
 	private void returnGoodsFromAgent(RunsafePlayer player, MailSendAgent agent)
