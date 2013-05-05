@@ -155,9 +155,18 @@ public class MailHandler implements IConfigurationChanged
 		RunsafeInventory mailPackage = this.mailPackageRepository.getMailPackage(packageID);
 		RunsafeInventory playerInventory = player.getInventory();
 		boolean sendWarning = false;
+		HashMap<String, Integer> yield = new HashMap<String, Integer>();
 
 		for (RunsafeItemStack itemStack : mailPackage.getContents())
 		{
+			String displayName = itemStack.getItemMeta().getDisplayName();
+			if (displayName == null) displayName = Material.getMaterial(itemStack.getItemId()).name().replace("_", "").toLowerCase();
+
+			if (yield.containsKey(displayName))
+				yield.put(displayName, yield.get(displayName) + itemStack.getAmount());
+			else
+				yield.put(displayName, itemStack.getAmount());
+
 			if (playerInventory.getContents().size() < playerInventory.getSize())
 			{
 				playerInventory.addItems(itemStack);
@@ -169,6 +178,9 @@ public class MailHandler implements IConfigurationChanged
 			}
 		}
 		player.updateInventory();
+
+		for (Map.Entry<String, Integer> result : yield.entrySet())
+			player.sendColouredMessage(String.format("&3Gained %sx %s from package.", result.getValue(), result.getKey()));
 
 		if (sendWarning)
 			player.sendColouredMessage("&3Your inventory is full, some of the items from the package have been dropped at your feet.");
