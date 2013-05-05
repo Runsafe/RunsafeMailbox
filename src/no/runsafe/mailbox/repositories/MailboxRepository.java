@@ -54,7 +54,7 @@ public class MailboxRepository extends Repository
 		HashMap<Integer, List<String>> versions = new HashMap<Integer, List<String>>();
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
-				"CRETE TABLE `player_mailboxes` (" +
+				"CREATE TABLE `player_mailboxes` (" +
 						"`player` varchar(50) NOT NULL," +
 						"`contents` longtext," +
 						"PRIMARY KEY (`player`)" +
