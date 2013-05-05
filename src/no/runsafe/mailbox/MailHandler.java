@@ -128,6 +128,9 @@ public class MailHandler implements IConfigurationChanged
 
 			this.refreshMailboxViewers(recipient);
 
+			if (recipient.isOnline())
+				recipient.sendColouredMessage("&eYou just received mail from " + sender.getPrettyName() + "&e!");
+
 			return "&2Mail sent successfully.";
 		}
 		return null;
