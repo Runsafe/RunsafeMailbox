@@ -99,6 +99,7 @@ public class MailHandler implements IConfigurationChanged
 			owner.sendColouredMessage("&cThe mailbox growls and spits your items onto the floor.");
 
 		this.mailboxRepository.updateMailbox(owner, mailbox);
+		this.closeMailbox(owner);
 	}
 
 	public String sendOutstandingMail(RunsafePlayer sender)
@@ -106,6 +107,7 @@ public class MailHandler implements IConfigurationChanged
 		if (this.isViewingSendAgent(sender))
 		{
 			MailSendAgent agent = this.openSendAgents.get(sender.getName());
+			this.removeAgent(sender);
 
 			// Check player can afford to send mail
 			if (!this.hasMailCost(sender))
@@ -126,7 +128,6 @@ public class MailHandler implements IConfigurationChanged
 			}
 
 			this.removeMailCost(sender); // YOINK.
-			this.removeAgent(sender);
 
 			RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
 			mailbox.addItems(this.packageMail(sender, agent.getInventory()));
@@ -137,6 +138,31 @@ public class MailHandler implements IConfigurationChanged
 			return "&2Mail sent successfully.";
 		}
 		return null;
+	}
+
+	public void openPackage(RunsafePlayer player, int packageID)
+	{
+		RunsafeInventory mailPackage = this.mailPackageRepository.getMailPackage(packageID);
+		RunsafeInventory playerInventory = player.getInventory();
+		boolean sendWarning = false;
+
+		for (RunsafeItemStack itemStack : mailPackage.getContents())
+		{
+			if (playerInventory.getContents().size() < playerInventory.getSize())
+			{
+				playerInventory.addItems(itemStack);
+			}
+			else
+			{
+				sendWarning = true;
+				player.getWorld().dropItem(player.getLocation(), itemStack);
+			}
+		}
+
+		if (sendWarning)
+			player.sendColouredMessage("&3Your inventory is full, some of the items from the package have been dropped at your feet.");
+
+		this.mailPackageRepository.removePackage(packageID);
 	}
 
 	private RunsafeItemStack packageMail(RunsafePlayer sender, RunsafeInventory contents)

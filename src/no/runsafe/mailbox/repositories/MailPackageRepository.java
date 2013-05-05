@@ -48,6 +48,11 @@ public class MailPackageRepository extends Repository
 		return 0;
 	}
 
+	public void removePackage(int packageID)
+	{
+		this.database.Execute("DELETE FROM mail_packages WHERE ID = ?", packageID);
+	}
+
 	@Override
 	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
 	{
