@@ -6,3 +6,5 @@ description:
 commands:
   viewmailbox:
     description: Views a players mailbox
+  sendmail:
+    description: Allows you to send mail to another player
