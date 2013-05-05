@@ -19,6 +19,9 @@ public class CloseInventory implements IInventoryClosed
 
 		if (this.mailHandler.isViewingSendAgent(player))
 			player.sendColouredMessage(this.mailHandler.sendOutstandingMail(player));
+
+		if (this.mailHandler.isViewingMailbox(player))
+			this.mailHandler.handleMailboxClose(player);
 	}
 
 	private MailHandler mailHandler;

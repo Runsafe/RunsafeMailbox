@@ -75,6 +75,32 @@ public class MailHandler implements IConfigurationChanged
 		this.openMailbox(viewer, owner);
 	}
 
+	public void handleMailboxClose(RunsafePlayer owner)
+	{
+		boolean hasRemoved = false;
+		RunsafeInventory mailbox = this.openMailboxes.get(owner.getName()).getMailbox();
+		for (RunsafeItemStack itemStack : mailbox.getContents())
+		{
+			if (itemStack.getItemId() == Material.CHEST.getId())
+			{
+				String displayName = itemStack.getItemMeta().getDisplayName();
+
+				if (displayName != null)
+					if (displayName.startsWith("Mail Package #"))
+						continue;
+			}
+
+			hasRemoved = true;
+			mailbox.remove(itemStack);
+			owner.getWorld().dropItem(owner.getLocation(), itemStack);
+		}
+
+		if (hasRemoved)
+			owner.sendColouredMessage("&cYou can't put that there, your items have been dropped on the floor.");
+
+		this.mailboxRepository.updateMailbox(owner, mailbox);
+	}
+
 	public String sendOutstandingMail(RunsafePlayer sender)
 	{
 		if (this.isViewingSendAgent(sender))
