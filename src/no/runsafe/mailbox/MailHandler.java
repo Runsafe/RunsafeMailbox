@@ -160,7 +160,7 @@ public class MailHandler implements IConfigurationChanged
 		for (RunsafeItemStack itemStack : mailPackage.getContents())
 		{
 			String displayName = itemStack.getItemMeta().getDisplayName();
-			if (displayName == null) displayName = Material.getMaterial(itemStack.getItemId()).name().replace("_", "").toLowerCase();
+			if (displayName == null) displayName = Material.getMaterial(itemStack.getItemId()).name().replace("_", " ").toLowerCase();
 
 			if (yield.containsKey(displayName))
 				yield.put(displayName, yield.get(displayName) + itemStack.getAmount());
@@ -204,7 +204,7 @@ public class MailHandler implements IConfigurationChanged
 
 	public String getMailCostText()
 	{
-		return this.mailSendCost + " " + Material.getMaterial(this.mailSendCurrency).name().replace("_", "").toLowerCase();
+		return this.mailSendCost + " " + Material.getMaterial(this.mailSendCurrency).name().replace("_", " ").toLowerCase();
 	}
 
 	private void returnGoodsFromAgent(RunsafePlayer player, MailSendAgent agent)
