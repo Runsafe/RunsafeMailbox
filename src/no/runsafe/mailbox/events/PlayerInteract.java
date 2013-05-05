@@ -34,6 +34,7 @@ public class PlayerInteract implements IPlayerInteractEvent
 						String[] split = displayName.split("#");
 						this.mailHandler.openPackage(player, Integer.valueOf(split[1]));
 						player.getInventory().remove(item);
+						event.setCancelled(true);
 					}
 				}
 			}
