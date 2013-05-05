@@ -51,7 +51,7 @@ public class MailPackageRepository extends Repository
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
 				"CREATE TABLE `mail_packages` (" +
-					"`ID` int(10) unsigned NOT NULL," +
+					"`ID` int(10) unsigned NOT NULL AUTO_INCREMENT," +
 					"`contents` longtext," +
 					"PRIMARY KEY (`ID`)" +
 				")"
