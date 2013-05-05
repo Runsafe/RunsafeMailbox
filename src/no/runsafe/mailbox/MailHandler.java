@@ -158,7 +158,24 @@ public class MailHandler implements IConfigurationChanged
 
 	private void removeMailCost(RunsafePlayer player)
 	{
-		player.getInventory().remove(new RunsafeItemStack(this.mailSendCurrency, this.mailSendCost));
+		int currentTaken = 0;
+		RunsafeInventory inventory = player.getInventory();
+		for (RunsafeItemStack itemStack : inventory.getContents())
+		{
+			if (itemStack.getItemId() == this.mailSendCurrency)
+			{
+				int need = this.mailSendCost - currentTaken;
+				if (itemStack.getAmount() <= need)
+				{
+					currentTaken -= itemStack.getAmount();
+					inventory.remove(itemStack);
+				}
+				else
+				{
+					itemStack.remove(need);
+				}
+			}
+		}
 	}
 
 	private void refreshMailboxViewers(RunsafePlayer owner)
