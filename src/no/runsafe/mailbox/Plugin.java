@@ -4,6 +4,7 @@ import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.mailbox.commands.SendMail;
 import no.runsafe.mailbox.commands.ViewMailbox;
 import no.runsafe.mailbox.events.CloseInventory;
+import no.runsafe.mailbox.events.InventoryClick;
 import no.runsafe.mailbox.events.PlayerInteract;
 import no.runsafe.mailbox.events.PlayerLogin;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
@@ -24,6 +25,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(CloseInventory.class);
 		this.addComponent(PlayerInteract.class);
 		this.addComponent(PlayerLogin.class);
+		this.addComponent(InventoryClick.class);
 
 		// Commands
 		this.addComponent(ViewMailbox.class);
