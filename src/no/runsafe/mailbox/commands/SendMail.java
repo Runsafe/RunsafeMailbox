@@ -26,6 +26,9 @@ public class SendMail extends PlayerCommand
 		if (player.getName().equals(executor.getName()))
 			return "&cYou cannot send mail to yourself.";
 
+		if (!this.mailHandler.hasMailCost(executor))
+			return "&cYou do not have enough money to send mail. Sending mail costs " + this.mailHandler.getMailCostText() + ".";
+
 		if (!this.mailHandler.hasFreeMailboxSpace(player))
 			return "&cThat player cannot receive mail right now.";
 
