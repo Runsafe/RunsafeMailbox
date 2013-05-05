@@ -4,7 +4,7 @@ version: 1.0.@BUILD@
 author: Kruithne
 description:
 commands:
-  viewmailbox:
+  viewmail:
     description: Views a players mailbox
-  mail:
+  sendmail:
     description: Allows you to send mail to another player
