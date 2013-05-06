@@ -4,6 +4,7 @@ import no.runsafe.framework.event.inventory.IInventoryClick;
 import no.runsafe.framework.server.event.inventory.RunsafeInventoryClickEvent;
 import no.runsafe.framework.server.inventory.RunsafeAnvilInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeItemMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 
 public class InventoryClick implements IInventoryClick
@@ -15,16 +16,20 @@ public class InventoryClick implements IInventoryClick
 
 		if (item != null)
 		{
-			String displayName = item.getItemMeta().getDisplayName();
-			if (displayName != null)
+			RunsafeItemMeta meta = item.getItemMeta();
+			if (meta != null)
 			{
-				RunsafePlayer player = event.getWhoClicked();
-				if (event.getInventory() instanceof RunsafeAnvilInventory)
+				String displayName = meta.getDisplayName();
+				if (displayName != null)
 				{
-					if (displayName.startsWith("Mail Package #"))
+					RunsafePlayer player = event.getWhoClicked();
+					if (event.getInventory() instanceof RunsafeAnvilInventory)
 					{
-						player.sendColouredMessage("&cYou cannot do that.");
-						event.setCancelled(true);
+						if (displayName.startsWith("Mail Package #"))
+						{
+							player.sendColouredMessage("&cYou cannot do that.");
+							event.setCancelled(true);
+						}
 					}
 				}
 			}
