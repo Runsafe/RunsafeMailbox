@@ -3,7 +3,6 @@ package no.runsafe.mailbox.events;
 import no.runsafe.framework.event.inventory.IInventoryClick;
 import no.runsafe.framework.server.event.inventory.RunsafeInventoryClickEvent;
 import no.runsafe.framework.server.inventory.RunsafeAnvilInventory;
-import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
 import no.runsafe.framework.server.item.meta.RunsafeItemMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
@@ -24,9 +23,6 @@ public class InventoryClick implements IInventoryClick
 				if (displayName != null)
 				{
 					RunsafePlayer player = event.getWhoClicked();
-					RunsafeInventory inventory = event.getInventory();
-
-					player.sendMessage(inventory.getClass().getName());
 
 					if (event.getInventory() instanceof RunsafeAnvilInventory)
 					{
