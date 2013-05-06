@@ -17,11 +17,14 @@ public class InventoryClick implements IInventoryClick
 			String displayName = item.getItemMeta().getDisplayName();
 			if (displayName != null)
 			{
-				if (displayName.startsWith("Mail Package #"))
+				RunsafePlayer player = event.getWhoClicked();
+				if (player.isViewingAnvil())
 				{
-					RunsafePlayer player = event.getWhoClicked();
-					player.sendColouredMessage("&cYou cannot do that.");
-					event.setCancelled(true);
+					if (displayName.startsWith("Mail Package #"))
+					{
+						player.sendColouredMessage("&cYou cannot do that.");
+						event.setCancelled(true);
+					}
 				}
 			}
 		}
