@@ -16,7 +16,8 @@ public class PlayerLogin implements IPlayerJoinEvent
 	public void OnPlayerJoinEvent(RunsafePlayerJoinEvent event)
 	{
 		RunsafePlayer player = event.getPlayer();
-		player.sendColouredMessage("&eYou have " + mailHandler.getInboxCount(player) + " packages in your mailbox!");
+		int mailCount = mailHandler.getInboxCount(player);
+		player.sendColouredMessage((mailCount > 0 ? "&a" : "&c") + "You have " + mailCount + " packages in your mailbox!");
 	}
 
 	private MailHandler mailHandler;
