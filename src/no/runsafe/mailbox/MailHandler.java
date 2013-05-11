@@ -133,9 +133,6 @@ public class MailHandler implements IConfigurationChanged
 			this.sendMail(recipient, sender.getName(), agent.getInventory());
 			this.refreshMailboxViewers(recipient);
 
-			if (recipient.isOnline())
-				recipient.sendColouredMessage("&eYou just received mail from " + sender.getPrettyName() + "&e.");
-
 			return "&2Mail sent successfully.";
 		}
 		return null;
@@ -152,6 +149,9 @@ public class MailHandler implements IConfigurationChanged
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
 		mailbox.addItems(this.packageMail(sender, inventory));
 		this.mailboxRepository.updateMailbox(recipient, mailbox);
+
+		if (recipient.isOnline())
+			recipient.sendColouredMessage("&eYou just received mail!");
 	}
 
 	public void openPackage(RunsafePlayer player, int packageID)
