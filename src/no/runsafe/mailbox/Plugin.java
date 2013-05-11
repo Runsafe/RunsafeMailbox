@@ -15,6 +15,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 	@Override
 	protected void PluginSetup()
 	{
+		this.addComponent(MailSender.class);
 		this.addComponent(MailHandler.class);
 
 		// Repositories

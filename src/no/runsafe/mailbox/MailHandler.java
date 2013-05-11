@@ -5,7 +5,6 @@ import no.runsafe.framework.event.IConfigurationChanged;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
-import no.runsafe.framework.server.item.meta.RunsafeItemMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
@@ -16,8 +15,9 @@ import java.util.Map;
 
 public class MailHandler implements IConfigurationChanged
 {
-	public MailHandler(MailboxRepository mailboxRepository, MailPackageRepository mailPackageRepository)
+	public MailHandler(MailSender mailSender, MailboxRepository mailboxRepository, MailPackageRepository mailPackageRepository)
 	{
+		this.mailSender = mailSender;
 		this.mailboxRepository = mailboxRepository;
 		this.mailPackageRepository = mailPackageRepository;
 	}
@@ -130,7 +130,7 @@ public class MailHandler implements IConfigurationChanged
 
 			this.removeMailCost(sender); // YOINK.
 
-			this.sendMail(recipient, sender.getName(), agent.getInventory());
+			this.mailSender.sendMail(recipient, sender.getName(), agent.getInventory());
 			this.refreshMailboxViewers(recipient);
 
 			return "&2Mail sent successfully.";
@@ -142,16 +142,6 @@ public class MailHandler implements IConfigurationChanged
 	{
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(player);
 		return mailbox.getContents().size();
-	}
-
-	public void sendMail(RunsafePlayer recipient, String sender, RunsafeInventory inventory)
-	{
-		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
-		mailbox.addItems(this.packageMail(sender, inventory));
-		this.mailboxRepository.updateMailbox(recipient, mailbox);
-
-		if (recipient.isOnline())
-			recipient.sendColouredMessage("&eYou just received mail!");
 	}
 
 	public void openPackage(RunsafePlayer player, int packageID)
@@ -190,20 +180,6 @@ public class MailHandler implements IConfigurationChanged
 			player.sendColouredMessage("&3Your inventory is full, some of the items from the package have been dropped at your feet.");
 
 		this.mailPackageRepository.removePackage(packageID);
-	}
-
-	private RunsafeItemStack packageMail(String sender, RunsafeInventory contents)
-	{
-		RunsafeItemStack mailPackage = new RunsafeItemStack(Material.CHEST.getId());
-		RunsafeItemMeta packageMeta = mailPackage.getItemMeta();
-
-		int packageID = this.mailPackageRepository.newPackage(contents);
-
-		packageMeta.setDisplayName("Mail Package #" + packageID);
-		packageMeta.addLore("Sent by " + sender);
-		mailPackage.setItemMeta(packageMeta);
-
-		return mailPackage;
 	}
 
 	public String getMailCostText()
@@ -279,6 +255,7 @@ public class MailHandler implements IConfigurationChanged
 		this.mailSendCost = configuration.getConfigValueAsInt("mailSendAmount");
 	}
 
+	private MailSender mailSender;
 	public HashMap<String, MailView> openMailboxes = new HashMap<String, MailView>();
 	public HashMap<String, MailSendAgent> openSendAgents = new HashMap<String, MailSendAgent>();
 	private MailboxRepository mailboxRepository;
