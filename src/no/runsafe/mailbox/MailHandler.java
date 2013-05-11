@@ -130,10 +130,7 @@ public class MailHandler implements IConfigurationChanged
 
 			this.removeMailCost(sender); // YOINK.
 
-			RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
-			mailbox.addItems(this.packageMail(sender, agent.getInventory()));
-			this.mailboxRepository.updateMailbox(recipient, mailbox);
-
+			this.sendMail(recipient, sender.getName(), agent.getInventory());
 			this.refreshMailboxViewers(recipient);
 
 			if (recipient.isOnline())
@@ -148,6 +145,13 @@ public class MailHandler implements IConfigurationChanged
 	{
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(player);
 		return mailbox.getContents().size();
+	}
+
+	public void sendMail(RunsafePlayer recipient, String sender, RunsafeInventory inventory)
+	{
+		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
+		mailbox.addItems(this.packageMail(sender, inventory));
+		this.mailboxRepository.updateMailbox(recipient, mailbox);
 	}
 
 	public void openPackage(RunsafePlayer player, int packageID)
@@ -188,7 +192,7 @@ public class MailHandler implements IConfigurationChanged
 		this.mailPackageRepository.removePackage(packageID);
 	}
 
-	private RunsafeItemStack packageMail(RunsafePlayer sender, RunsafeInventory contents)
+	private RunsafeItemStack packageMail(String sender, RunsafeInventory contents)
 	{
 		RunsafeItemStack mailPackage = new RunsafeItemStack(Material.CHEST.getId());
 		RunsafeItemMeta packageMeta = mailPackage.getItemMeta();
@@ -196,7 +200,7 @@ public class MailHandler implements IConfigurationChanged
 		int packageID = this.mailPackageRepository.newPackage(contents);
 
 		packageMeta.setDisplayName("Mail Package #" + packageID);
-		packageMeta.addLore("Sent by " + sender.getName());
+		packageMeta.addLore("Sent by " + sender);
 		mailPackage.setItemMeta(packageMeta);
 
 		return mailPackage;
