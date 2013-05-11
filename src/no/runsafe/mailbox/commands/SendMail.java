@@ -4,15 +4,17 @@ import no.runsafe.framework.command.player.PlayerCommand;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
+import no.runsafe.mailbox.MailSender;
 
 import java.util.HashMap;
 
 public class SendMail extends PlayerCommand
 {
-	public SendMail(MailHandler mailHandler)
+	public SendMail(MailHandler mailHandler, MailSender mailSender)
 	{
 		super("sendmail", "Sends mail to another player", "runsafe.mailbox.send", "player");
 		this.mailHandler = mailHandler;
+		this.mailSender = mailSender;
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class SendMail extends PlayerCommand
 		if (!this.mailHandler.hasMailCost(executor))
 			return "&cYou do not have enough money to send mail. Sending mail costs " + this.mailHandler.getMailCostText() + ".";
 
-		if (!this.mailHandler.hasFreeMailboxSpace(player))
+		if (!this.mailSender.hasFreeMailboxSpace(player))
 			return "&cThat player cannot receive mail right now.";
 
 		this.mailHandler.openMailSender(executor, player);
@@ -37,4 +39,5 @@ public class SendMail extends PlayerCommand
 	}
 
 	private MailHandler mailHandler;
+	private MailSender mailSender;
 }
