@@ -26,6 +26,12 @@ public class MailSender
 			recipient.sendColouredMessage("&eYou just received mail!");
 	}
 
+	public boolean hasFreeMailboxSpace(RunsafePlayer mailboxOwner)
+	{
+		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
+		return inventory.getContents().size() < inventory.getSize();
+	}
+
 	private RunsafeItemStack packageMail(String sender, RunsafeInventory contents)
 	{
 		RunsafeItemStack mailPackage = new RunsafeItemStack(Material.CHEST.getId());

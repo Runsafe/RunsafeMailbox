@@ -37,12 +37,6 @@ public class MailHandler implements IConfigurationChanged
 		}
 	}
 
-	public boolean hasFreeMailboxSpace(RunsafePlayer mailboxOwner)
-	{
-		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
-		return inventory.getContents().size() < inventory.getSize();
-	}
-
 	public void openMailSender(RunsafePlayer sender, RunsafePlayer recipient)
 	{
 		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText() + ".");
@@ -121,7 +115,7 @@ public class MailHandler implements IConfigurationChanged
 			RunsafePlayer recipient = agent.getRecipient();
 
 			// Check the recipient has enough free space in their inbox.
-			if (!this.hasFreeMailboxSpace(recipient))
+			if (!this.mailSender.hasFreeMailboxSpace(recipient))
 			{
 				this.returnGoodsFromAgent(sender, agent);
 				this.removeAgent(sender);
