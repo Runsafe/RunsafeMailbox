@@ -41,16 +41,7 @@ public class MailPackageRepository extends Repository
 		// Science?
 		Map<String, Object> data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
 		if (data != null)
-		{
-			if (data.get("ID") instanceof Integer)
 				return (Integer) data.get("ID");
-
-			if (data.get("ID") instanceof Long)
-			{
-				long theLong = (Long) data.get("ID");
-				return (int) theLong;
-			}
-		}
 
 		return 0;
 	}
