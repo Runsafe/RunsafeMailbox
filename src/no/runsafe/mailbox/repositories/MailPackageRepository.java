@@ -5,6 +5,7 @@ import no.runsafe.framework.database.Repository;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +38,9 @@ public class MailPackageRepository extends Repository
 	public int newPackage(RunsafeInventory contents)
 	{
 		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-
-		// Science?
 		Map<String, Object> data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
 		if (data != null)
-				return (Integer) data.get("ID");
+			return ((BigInteger) data.get("ID")).intValue();
 
 		return 0;
 	}
