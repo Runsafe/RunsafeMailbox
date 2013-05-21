@@ -38,6 +38,7 @@ public class MailPackageRepository extends Repository
 	{
 		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
 
+		// Science?
 		Map<String, Object> data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
 		if (data != null)
 		{
