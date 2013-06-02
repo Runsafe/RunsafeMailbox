@@ -2,6 +2,7 @@ package no.runsafe.mailbox;
 
 import no.runsafe.framework.configuration.IConfiguration;
 import no.runsafe.framework.event.IConfigurationChanged;
+import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
@@ -209,7 +210,7 @@ public class MailHandler implements IConfigurationChanged
 
 	public boolean hasMailCost(RunsafePlayer player)
 	{
-		return player.getInventory().contains(this.mailSendCurrency, this.mailSendCost);
+		return player.getInventory().contains(Item.get(this.mailSendCurrency), this.mailSendCost);
 	}
 
 	private void removeMailCost(RunsafePlayer player)
