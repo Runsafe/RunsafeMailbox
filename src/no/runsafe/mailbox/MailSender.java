@@ -46,6 +46,6 @@ public class MailSender
 		return mailPackage;
 	}
 
-	private MailboxRepository mailboxRepository;
-	private MailPackageRepository mailPackageRepository;
+	private final MailboxRepository mailboxRepository;
+	private final MailPackageRepository mailPackageRepository;
 }

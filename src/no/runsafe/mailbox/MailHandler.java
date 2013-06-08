@@ -250,11 +250,11 @@ public class MailHandler implements IConfigurationChanged
 		this.mailSendCost = configuration.getConfigValueAsInt("mailSendAmount");
 	}
 
-	private MailSender mailSender;
-	public HashMap<String, MailView> openMailboxes = new HashMap<String, MailView>();
-	public HashMap<String, MailSendAgent> openSendAgents = new HashMap<String, MailSendAgent>();
-	private MailboxRepository mailboxRepository;
-	private MailPackageRepository mailPackageRepository;
+	private final MailSender mailSender;
+	public final HashMap<String, MailView> openMailboxes = new HashMap<String, MailView>();
+	public final HashMap<String, MailSendAgent> openSendAgents = new HashMap<String, MailSendAgent>();
+	private final MailboxRepository mailboxRepository;
+	private final MailPackageRepository mailPackageRepository;
 	private int mailSendCurrency;
 	private int mailSendCost;
 }

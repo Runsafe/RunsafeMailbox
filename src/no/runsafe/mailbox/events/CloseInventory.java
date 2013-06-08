@@ -24,5 +24,5 @@ public class CloseInventory implements IInventoryClosed
 			this.mailHandler.handleMailboxClose(player);
 	}
 
-	private MailHandler mailHandler;
+	private final MailHandler mailHandler;
 }

@@ -21,6 +21,6 @@ public class MailSendAgent
 		return this.recipient;
 	}
 
-	private RunsafeInventory inventory;
-	private RunsafePlayer recipient;
+	private final RunsafeInventory inventory;
+	private final RunsafePlayer recipient;
 }

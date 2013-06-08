@@ -21,5 +21,5 @@ public class ViewMailbox extends PlayerCommand
 		return null;
 	}
 
-	private MailHandler mailHandler;
+	private final MailHandler mailHandler;
 }

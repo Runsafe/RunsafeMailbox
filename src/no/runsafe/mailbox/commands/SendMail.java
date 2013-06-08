@@ -38,6 +38,6 @@ public class SendMail extends PlayerCommand
 		return null;
 	}
 
-	private MailHandler mailHandler;
-	private MailSender mailSender;
+	private final MailHandler mailHandler;
+	private final MailSender mailSender;
 }

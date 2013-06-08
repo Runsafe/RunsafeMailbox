@@ -41,5 +41,5 @@ public class PlayerInteract implements IPlayerInteractEvent
 		}
 	}
 
-	private MailHandler mailHandler;
+	private final MailHandler mailHandler;
 }

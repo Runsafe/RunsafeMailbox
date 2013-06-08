@@ -64,5 +64,5 @@ public class MailboxRepository extends Repository
 		return versions;
 	}
 
-	private IDatabase database;
+	private final IDatabase database;
 }

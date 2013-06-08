@@ -20,5 +20,5 @@ public class PlayerLogin implements IPlayerJoinEvent
 		player.sendColouredMessage((mailCount > 0 ? "&a" : "&c") + "You have " + mailCount + " packages in your mailbox!");
 	}
 
-	private MailHandler mailHandler;
+	private final MailHandler mailHandler;
 }

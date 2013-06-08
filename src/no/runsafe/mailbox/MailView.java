@@ -27,7 +27,7 @@ public class MailView
 		return this.viewer;
 	}
 
-	private String owner;
-	private RunsafeInventory mailbox;
-	private RunsafePlayer viewer;
+	private final String owner;
+	private final RunsafeInventory mailbox;
+	private final RunsafePlayer viewer;
 }
