@@ -35,14 +35,8 @@ public class MailSender
 	private RunsafeItemStack packageMail(String sender, RunsafeInventory contents)
 	{
 		RunsafeItemStack mailPackage = new RunsafeItemStack(Material.CHEST.getId());
-		RunsafeItemMeta packageMeta = mailPackage.getItemMeta();
-
 		int packageID = this.mailPackageRepository.newPackage(contents);
-
-		packageMeta.setDisplayName("Mail Package #" + packageID);
-		packageMeta.addLore("Sent by " + sender);
-		mailPackage.setItemMeta(packageMeta);
-
+		mailPackage.setDisplayName("Mail Package #" + packageID).addLore("Sent by " + sender);
 		return mailPackage;
 	}
 

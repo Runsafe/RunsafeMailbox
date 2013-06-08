@@ -1,12 +1,11 @@
 package no.runsafe.mailbox.events;
 
 import no.runsafe.framework.event.player.IPlayerInteractEvent;
+import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.server.item.RunsafeItemStack;
-import no.runsafe.framework.server.item.meta.RunsafeItemMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
-import org.bukkit.Material;
 
 public class PlayerInteract implements IPlayerInteractEvent
 {
@@ -21,21 +20,16 @@ public class PlayerInteract implements IPlayerInteractEvent
 		if (event.hasItem())
 		{
 			RunsafeItemStack item = event.getItemStack();
-			if (event.getItemStack().getItemId() == Material.CHEST.getId())
+			if (event.getItemStack().is(Item.Decoration.Chest))
 			{
-				RunsafeItemMeta meta = item.getItemMeta();
-				String displayName = meta.getDisplayName();
-
-				if (displayName != null)
+				String displayName = item.getDisplayName();
+				if (displayName != null && displayName.startsWith("Mail Package #"))
 				{
-					if (displayName.startsWith("Mail Package #"))
-					{
-						RunsafePlayer player = event.getPlayer();
-						String[] split = displayName.split("#");
-						this.mailHandler.openPackage(player, Integer.valueOf(split[1]));
-						player.getInventory().remove(item);
-						event.setCancelled(true);
-					}
+					RunsafePlayer player = event.getPlayer();
+					String[] split = displayName.split("#");
+					this.mailHandler.openPackage(player, Integer.valueOf(split[1]));
+					player.getInventory().remove(item);
+					event.setCancelled(true);
 				}
 			}
 		}
