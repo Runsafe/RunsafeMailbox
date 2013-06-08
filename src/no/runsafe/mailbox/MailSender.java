@@ -2,7 +2,6 @@ package no.runsafe.mailbox;
 
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
-import no.runsafe.framework.server.item.meta.RunsafeItemMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
