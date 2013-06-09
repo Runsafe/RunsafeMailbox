@@ -1,11 +1,12 @@
 package no.runsafe.mailbox;
 
+import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
-import org.bukkit.Material;
 
 public class MailSender
 {
@@ -33,7 +34,7 @@ public class MailSender
 
 	private RunsafeItemStack packageMail(String sender, RunsafeInventory contents)
 	{
-		RunsafeItemStack mailPackage = new RunsafeItemStack(Material.CHEST.getId());
+		RunsafeMeta mailPackage = (RunsafeMeta) Item.Decoration.Chest.getItem();
 		int packageID = this.mailPackageRepository.newPackage(contents);
 		mailPackage.setDisplayName("Mail Package #" + packageID).addLore("Sent by " + sender);
 		return mailPackage;
