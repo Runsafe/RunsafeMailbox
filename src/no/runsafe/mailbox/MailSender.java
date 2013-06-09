@@ -2,7 +2,6 @@ package no.runsafe.mailbox;
 
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
-import no.runsafe.framework.server.item.RunsafeItemStack;
 import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
@@ -32,9 +31,9 @@ public class MailSender
 		return inventory.getContents().size() < inventory.getSize();
 	}
 
-	private RunsafeItemStack packageMail(String sender, RunsafeInventory contents)
+	private RunsafeMeta packageMail(String sender, RunsafeInventory contents)
 	{
-		RunsafeMeta mailPackage = (RunsafeMeta) Item.Decoration.Chest.getItem();
+		RunsafeMeta mailPackage = Item.Decoration.Chest.getItem();
 		int packageID = this.mailPackageRepository.newPackage(contents);
 		mailPackage.setDisplayName("Mail Package #" + packageID).addLore("Sent by " + sender);
 		return mailPackage;

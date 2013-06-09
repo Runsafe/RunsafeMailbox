@@ -5,7 +5,6 @@ import no.runsafe.framework.event.IConfigurationChanged;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
-import no.runsafe.framework.server.item.RunsafeItemStack;
 import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
@@ -76,11 +75,11 @@ public class MailHandler implements IConfigurationChanged
 	{
 		boolean hasRemoved = false;
 		RunsafeInventory mailbox = this.openMailboxes.get(owner.getName()).getMailbox();
-		for (RunsafeItemStack itemStack : mailbox.getContents())
+		for (RunsafeMeta itemStack : mailbox.getContents())
 		{
 			if (itemStack.is(Item.Decoration.Chest))
 			{
-				String displayName = ((RunsafeMeta)itemStack).getDisplayName();
+				String displayName = itemStack.getDisplayName();
 
 				if (displayName != null)
 					if (displayName.startsWith("Mail Package #"))
@@ -147,9 +146,9 @@ public class MailHandler implements IConfigurationChanged
 		boolean sendWarning = false;
 		HashMap<String, Integer> yield = new HashMap<String, Integer>();
 
-		for (RunsafeItemStack itemStack : mailPackage.getContents())
+		for (RunsafeMeta itemStack : mailPackage.getContents())
 		{
-			String displayName = ((RunsafeMeta)itemStack).getDisplayName();
+			String displayName = itemStack.getDisplayName();
 			if (displayName == null) displayName = itemStack.getNormalName();
 
 			if (yield.containsKey(displayName))
@@ -187,7 +186,7 @@ public class MailHandler implements IConfigurationChanged
 	{
 		RunsafeInventory inventory = player.getInventory();
 		boolean sendWarning = false;
-		for (RunsafeItemStack itemStack : agent.getInventory().getContents())
+		for (RunsafeMeta itemStack : agent.getInventory().getContents())
 		{
 			if (inventory.getContents().size() < inventory.getSize())
 				inventory.addItems(itemStack);
@@ -218,7 +217,7 @@ public class MailHandler implements IConfigurationChanged
 	{
 		int currentTaken = 0;
 		RunsafeInventory inventory = player.getInventory();
-		for (RunsafeItemStack itemStack : inventory.getContents())
+		for (RunsafeMeta itemStack : inventory.getContents())
 		{
 			if (itemStack.getItemId() == this.mailSendCurrency)
 			{
