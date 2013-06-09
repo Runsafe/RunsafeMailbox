@@ -6,6 +6,7 @@ import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
@@ -77,9 +78,9 @@ public class MailHandler implements IConfigurationChanged
 		RunsafeInventory mailbox = this.openMailboxes.get(owner.getName()).getMailbox();
 		for (RunsafeItemStack itemStack : mailbox.getContents())
 		{
-			if (itemStack.getItemId() == Material.CHEST.getId())
+			if (itemStack.is(Item.Decoration.Chest))
 			{
-				String displayName = itemStack.getItemMeta().getDisplayName();
+				String displayName = ((RunsafeMeta)itemStack).getDisplayName();
 
 				if (displayName != null)
 					if (displayName.startsWith("Mail Package #"))
@@ -148,8 +149,8 @@ public class MailHandler implements IConfigurationChanged
 
 		for (RunsafeItemStack itemStack : mailPackage.getContents())
 		{
-			String displayName = itemStack.getItemMeta().getDisplayName();
-			if (displayName == null) displayName = Material.getMaterial(itemStack.getItemId()).name().replace("_", " ").toLowerCase();
+			String displayName = ((RunsafeMeta)itemStack).getDisplayName();
+			if (displayName == null) displayName = itemStack.getNormalName();
 
 			if (yield.containsKey(displayName))
 				yield.put(displayName, yield.get(displayName) + itemStack.getAmount());
