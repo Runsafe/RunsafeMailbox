@@ -13,7 +13,7 @@ public class InventoryClick implements IInventoryClick
 	public void OnInventoryClickEvent(RunsafeInventoryClickEvent event)
 	{
 		RunsafeItemStack item = event.getCurrentItem();
-		if (item == null || !(item instanceof RunsafeMeta) || !(event.getInventory() instanceof RunsafeAnvilInventory))
+		if (item == null || !item.hasItemMeta() || !(event.getInventory() instanceof RunsafeAnvilInventory))
 			return;
 
 		if (((RunsafeMeta)item).getDisplayName().startsWith("Mail Package #"))

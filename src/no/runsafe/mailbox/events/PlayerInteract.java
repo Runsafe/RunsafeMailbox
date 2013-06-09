@@ -21,7 +21,7 @@ public class PlayerInteract implements IPlayerInteractEvent
 		if (event.hasItem())
 		{
 			RunsafeItemStack item = event.getItemStack();
-			if (event.getItemStack().is(Item.Decoration.Chest))
+			if (item.is(Item.Decoration.Chest) && item.hasItemMeta())
 			{
 				String displayName = ((RunsafeMeta) item).getDisplayName();
 				if (displayName != null && displayName.startsWith("Mail Package #"))
