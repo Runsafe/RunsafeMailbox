@@ -4,6 +4,7 @@ import no.runsafe.framework.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
 import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 
@@ -22,7 +23,7 @@ public class PlayerInteract implements IPlayerInteractEvent
 			RunsafeItemStack item = event.getItemStack();
 			if (event.getItemStack().is(Item.Decoration.Chest))
 			{
-				String displayName = item.getDisplayName();
+				String displayName = ((RunsafeMeta) item).getDisplayName();
 				if (displayName != null && displayName.startsWith("Mail Package #"))
 				{
 					RunsafePlayer player = event.getPlayer();

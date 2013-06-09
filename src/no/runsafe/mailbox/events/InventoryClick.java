@@ -4,6 +4,7 @@ import no.runsafe.framework.event.inventory.IInventoryClick;
 import no.runsafe.framework.server.event.inventory.RunsafeInventoryClickEvent;
 import no.runsafe.framework.server.inventory.RunsafeAnvilInventory;
 import no.runsafe.framework.server.item.RunsafeItemStack;
+import no.runsafe.framework.server.item.meta.RunsafeMeta;
 import no.runsafe.framework.server.player.RunsafePlayer;
 
 public class InventoryClick implements IInventoryClick
@@ -12,10 +13,10 @@ public class InventoryClick implements IInventoryClick
 	public void OnInventoryClickEvent(RunsafeInventoryClickEvent event)
 	{
 		RunsafeItemStack item = event.getCurrentItem();
-		if (item == null || !(event.getInventory() instanceof RunsafeAnvilInventory))
+		if (item == null || !(item instanceof RunsafeMeta) || !(event.getInventory() instanceof RunsafeAnvilInventory))
 			return;
 
-		if (item.getDisplayName().startsWith("Mail Package #"))
+		if (((RunsafeMeta)item).getDisplayName().startsWith("Mail Package #"))
 		{
 			RunsafePlayer player = event.getWhoClicked();
 			player.sendColouredMessage("&cYou cannot do that.");
