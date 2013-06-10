@@ -2,14 +2,13 @@ package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.database.IDatabase;
 import no.runsafe.framework.database.Repository;
+import no.runsafe.framework.database.Row;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MailPackageRepository extends Repository
 {
@@ -26,11 +25,11 @@ public class MailPackageRepository extends Repository
 
 	public RunsafeInventory getMailPackage(int packageID)
 	{
-		Map<String, Object> data = this.database.QueryRow("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
+		Row data = this.database.QueryRow("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "");
 
 		if (data != null)
-			inventory.unserialize((String) data.get("contents"));
+			inventory.unserialize(data.String("contents"));
 
 		return inventory;
 	}
@@ -38,9 +37,9 @@ public class MailPackageRepository extends Repository
 	public int newPackage(RunsafeInventory contents)
 	{
 		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-		Map<String, Object> data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
+		Row data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
 		if (data != null)
-			return ((BigInteger) data.get("ID")).intValue();
+			return data.Integer("ID");
 
 		return 0;
 	}

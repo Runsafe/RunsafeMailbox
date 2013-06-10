@@ -2,6 +2,7 @@ package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.database.IDatabase;
 import no.runsafe.framework.database.Repository;
+import no.runsafe.framework.database.Row;
 import no.runsafe.framework.server.RunsafeServer;
 import no.runsafe.framework.server.inventory.RunsafeInventory;
 import no.runsafe.framework.server.player.RunsafePlayer;
@@ -9,7 +10,6 @@ import no.runsafe.framework.server.player.RunsafePlayer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MailboxRepository extends Repository
 {
@@ -27,14 +27,14 @@ public class MailboxRepository extends Repository
 	public RunsafeInventory getMailbox(RunsafePlayer player)
 	{
 		String playerName = player.getName();
-		Map<String, Object> data = this.database.QueryRow(
+		Row data = this.database.QueryRow(
 				"SELECT contents FROM player_mailboxes WHERE player = ?", playerName
 		);
 
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 27, String.format("%s's Mailbox", playerName));
 
 		if (data != null)
-			inventory.unserialize((String) data.get("contents"));
+			inventory.unserialize(data.String("contents"));
 
 		return inventory;
 	}
