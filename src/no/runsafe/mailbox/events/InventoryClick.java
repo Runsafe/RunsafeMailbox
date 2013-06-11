@@ -16,11 +16,15 @@ public class InventoryClick implements IInventoryClick
 		if (item == null || !item.hasItemMeta() || !(event.getInventory() instanceof RunsafeAnvilInventory))
 			return;
 
-		if (item.getDisplayName().startsWith("Mail Package #"))
+		String displayName = item.getDisplayName();
+		if (displayName != null)
 		{
-			RunsafePlayer player = event.getWhoClicked();
-			player.sendColouredMessage("&cYou cannot do that.");
-			event.setCancelled(true);
+			if (displayName.startsWith("Mail Package #"))
+			{
+				RunsafePlayer player = event.getWhoClicked();
+				player.sendColouredMessage("&cYou cannot do that.");
+				event.setCancelled(true);
+			}
 		}
 	}
 }
