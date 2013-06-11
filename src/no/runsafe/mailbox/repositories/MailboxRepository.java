@@ -1,8 +1,8 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.internal.database.Repository;
-import no.runsafe.framework.internal.database.Row;
+import no.runsafe.framework.api.database.IRow;
+import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -27,7 +27,7 @@ public class MailboxRepository extends Repository
 	public RunsafeInventory getMailbox(RunsafePlayer player)
 	{
 		String playerName = player.getName();
-		Row data = this.database.QueryRow(
+		IRow data = this.database.QueryRow(
 				"SELECT contents FROM player_mailboxes WHERE player = ?", playerName
 		);
 

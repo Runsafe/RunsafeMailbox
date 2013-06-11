@@ -1,8 +1,8 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.internal.database.Repository;
-import no.runsafe.framework.internal.database.Row;
+import no.runsafe.framework.api.database.IRow;
+import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
@@ -25,7 +25,7 @@ public class MailPackageRepository extends Repository
 
 	public RunsafeInventory getMailPackage(int packageID)
 	{
-		Row data = this.database.QueryRow("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
+		IRow data = this.database.QueryRow("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "");
 
 		if (data != null)
@@ -37,7 +37,7 @@ public class MailPackageRepository extends Repository
 	public int newPackage(RunsafeInventory contents)
 	{
 		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-		Row data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
+		IRow data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
 		if (data != null)
 			return data.Integer("ID");
 
