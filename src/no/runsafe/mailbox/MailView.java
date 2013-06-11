@@ -1,7 +1,7 @@
 package no.runsafe.mailbox;
 
-import no.runsafe.framework.server.inventory.RunsafeInventory;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class MailView
 {

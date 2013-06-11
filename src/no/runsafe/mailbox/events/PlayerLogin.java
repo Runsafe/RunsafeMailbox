@@ -1,8 +1,8 @@
 package no.runsafe.mailbox.events;
 
-import no.runsafe.framework.event.player.IPlayerJoinEvent;
-import no.runsafe.framework.server.event.player.RunsafePlayerJoinEvent;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.api.event.player.IPlayerJoinEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerJoinEvent;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 
 public class PlayerLogin implements IPlayerJoinEvent

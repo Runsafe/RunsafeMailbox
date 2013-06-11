@@ -1,12 +1,12 @@
 package no.runsafe.mailbox;
 
-import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.event.IConfigurationChanged;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.server.RunsafeServer;
-import no.runsafe.framework.server.inventory.RunsafeInventory;
-import no.runsafe.framework.server.item.meta.RunsafeMeta;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.minecraft.RunsafeServer;
+import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
+import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
 import org.bukkit.Material;

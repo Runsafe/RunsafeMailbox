@@ -1,10 +1,10 @@
 package no.runsafe.mailbox.events;
 
-import no.runsafe.framework.event.player.IPlayerInteractEvent;
+import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.server.event.player.RunsafePlayerInteractEvent;
-import no.runsafe.framework.server.item.meta.RunsafeMeta;
-import no.runsafe.framework.server.player.RunsafePlayer;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
+import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 
 public class PlayerInteract implements IPlayerInteractEvent
