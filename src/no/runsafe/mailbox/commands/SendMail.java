@@ -12,7 +12,7 @@ public class SendMail extends PlayerCommand
 {
 	public SendMail(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("sendmail", "Sends mail to another player", "runsafe.mailbox.send", "player");
+		super("send", "Sends mail to another player", "runsafe.mailbox.send", "player");
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}

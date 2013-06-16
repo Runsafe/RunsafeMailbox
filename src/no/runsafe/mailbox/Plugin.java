@@ -1,6 +1,7 @@
 package no.runsafe.mailbox;
 
 import no.runsafe.framework.RunsafeConfigurablePlugin;
+import no.runsafe.framework.api.command.Command;
 import no.runsafe.mailbox.commands.SendMail;
 import no.runsafe.mailbox.commands.ViewMailbox;
 import no.runsafe.mailbox.events.CloseInventory;
@@ -29,7 +30,9 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(InventoryClick.class);
 
 		// Commands
-		this.addComponent(ViewMailbox.class);
-		this.addComponent(SendMail.class);
+		Command mailCommand = new Command("mail", "Mail related commands", null);
+		mailCommand.addSubCommand(getInstance(ViewMailbox.class));
+		mailCommand.addSubCommand(getInstance(SendMail.class));
+		this.addComponent(mailCommand);
 	}
 }

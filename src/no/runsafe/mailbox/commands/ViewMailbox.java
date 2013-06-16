@@ -10,7 +10,7 @@ public class ViewMailbox extends PlayerCommand
 {
 	public ViewMailbox(MailHandler mailHandler)
 	{
-		super("viewmail", "Views a players mailbox", "runsafe.mailbox.admin.view");
+		super("view", "Views a players mailbox", "runsafe.mailbox.admin.view");
 		this.mailHandler = mailHandler;
 	}
 
