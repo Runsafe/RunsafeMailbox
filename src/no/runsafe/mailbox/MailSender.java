@@ -31,6 +31,7 @@ public class MailSender
 
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
 		mailbox.addItems(item);
+		executor.getInventory().remove(item);
 		this.mailboxRepository.updateMailbox(recipient, mailbox);
 
 		this.sendNotification(recipient);
