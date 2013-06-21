@@ -85,6 +85,11 @@ public class MailHandler implements IConfigurationChanged
 					if (displayName.startsWith("Mail Package #"))
 						continue;
 			}
+			else if (itemStack.is(Item.Special.Crafted.WrittenBook))
+			{
+				// Allow written books inside the mailbox.
+				continue;
+			}
 
 			hasRemoved = true;
 			mailbox.remove(itemStack);
@@ -182,6 +187,11 @@ public class MailHandler implements IConfigurationChanged
 		return this.mailSendCost + " " + Material.getMaterial(this.mailSendCurrency).name().replace("_", " ").toLowerCase();
 	}
 
+	public String getMailBookCostText()
+	{
+		return this.mailSendBookAmount + " " + Material.getMaterial(this.mailSendBookCurrency).name().replace("_", " ").toLowerCase();
+	}
+
 	private void returnGoodsFromAgent(RunsafePlayer player, MailSendAgent agent)
 	{
 		RunsafeInventory inventory = player.getInventory();
@@ -211,6 +221,11 @@ public class MailHandler implements IConfigurationChanged
 	public boolean hasMailCost(RunsafePlayer player)
 	{
 		return player.getInventory().contains(Item.get(this.mailSendCurrency), this.mailSendCost);
+	}
+
+	public boolean hasMailBookCost(RunsafePlayer player)
+	{
+		return player.getInventory().contains(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
 	}
 
 	private void removeMailCost(RunsafePlayer player)
@@ -248,6 +263,8 @@ public class MailHandler implements IConfigurationChanged
 	{
 		this.mailSendCurrency = configuration.getConfigValueAsInt("mailSendCurrency");
 		this.mailSendCost = configuration.getConfigValueAsInt("mailSendAmount");
+		this.mailSendBookCurrency = configuration.getConfigValueAsInt("mailSendBookCurrency");
+		this.mailSendBookAmount = configuration.getConfigValueAsInt("mailSendBookAmount");
 	}
 
 	private final MailSender mailSender;
@@ -257,4 +274,6 @@ public class MailHandler implements IConfigurationChanged
 	private final MailPackageRepository mailPackageRepository;
 	private int mailSendCurrency;
 	private int mailSendCost;
+	private int mailSendBookCurrency;
+	private int mailSendBookAmount;
 }

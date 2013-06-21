@@ -21,8 +21,25 @@ public class MailSender
 		mailbox.addItems(this.packageMail(sender, inventory));
 		this.mailboxRepository.updateMailbox(recipient, mailbox);
 
-		if (recipient.isOnline())
-			recipient.sendColouredMessage("&eYou just received mail!");
+		this.sendNotification(recipient);
+	}
+
+	public void sendItemInHand(RunsafePlayer recipient, String sender)
+	{
+		RunsafeMeta item = recipient.getItemInHand();
+		item.addLore("Sent by " + sender);
+
+		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
+		mailbox.addItems(item);
+		this.mailboxRepository.updateMailbox(recipient, mailbox);
+
+		this.sendNotification(recipient);
+	}
+
+	private void sendNotification(RunsafePlayer player)
+	{
+		if (player.isOnline())
+			player.sendColouredMessage("&3You just received mail!");
 	}
 
 	public boolean hasFreeMailboxSpace(RunsafePlayer mailboxOwner)

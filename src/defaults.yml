@@ -1,2 +1,4 @@
 mailSendCurrency: 264
 mailSendAmount: 1
+mailSendBookCurrency: 266
+mailSendBookAmount: 10
