@@ -34,7 +34,7 @@ public class SendBook extends PlayerCommand
 		if (player.getName().equalsIgnoreCase(executorName))
 			return "&cYou cannot mail things to yourself.";
 
-		if (!this.mailHandler.hasMailBookCost(player))
+		if (!this.mailHandler.hasMailBookCost(executor))
 			return "&cYou do not have enough money to send a book. Sending books costs " + this.mailHandler.getMailBookCostText() + ".";
 
 		if (!this.mailSender.hasFreeMailboxSpace(player))
