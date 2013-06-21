@@ -27,7 +27,7 @@ public class MailSender
 	public void sendItemInHand(RunsafePlayer recipient, String sender)
 	{
 		RunsafeMeta item = recipient.getItemInHand();
-		item.addLore("Sent by " + sender);
+		item.setDisplayName("Book from " + sender);
 
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
 		mailbox.addItems(item);
