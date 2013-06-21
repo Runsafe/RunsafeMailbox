@@ -24,10 +24,10 @@ public class MailSender
 		this.sendNotification(recipient);
 	}
 
-	public void sendItemInHand(RunsafePlayer recipient, String sender)
+	public void sendItemInHand(RunsafePlayer recipient, RunsafePlayer executor)
 	{
-		RunsafeMeta item = recipient.getItemInHand();
-		item.setDisplayName("Book from " + sender);
+		RunsafeMeta item = executor.getItemInHand();
+		item.addLore("Sent by " + executor.getName());
 
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
 		mailbox.addItems(item);

@@ -30,8 +30,7 @@ public class SendBook extends PlayerCommand
 		if (player instanceof RunsafeAmbiguousPlayer)
 			return player.toString();
 
-		String executorName = executor.getName();
-		if (player.getName().equalsIgnoreCase(executorName))
+		if (player.getName().equalsIgnoreCase(executor.getName()))
 			return "&cYou cannot mail things to yourself.";
 
 		if (!this.mailHandler.hasMailBookCost(executor))
@@ -44,7 +43,7 @@ public class SendBook extends PlayerCommand
 		if (itemInHand == null || !itemInHand.is(Item.Special.Crafted.WrittenBook))
 			return "&cYou must be holding a written book.";
 
-		this.mailSender.sendItemInHand(player, executorName);
+		this.mailSender.sendItemInHand(player, executor);
 		return null;
 	}
 
