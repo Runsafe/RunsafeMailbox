@@ -40,7 +40,7 @@ public class SendBook extends PlayerCommand
 		if (!this.mailSender.hasFreeMailboxSpace(player))
 			return "&cThat player cannot receive mail right now.";
 
-		RunsafeMeta itemInHand = player.getItemInHand();
+		RunsafeMeta itemInHand = executor.getItemInHand();
 		if (itemInHand == null || !itemInHand.is(Item.Special.Crafted.WrittenBook))
 			return "&cYou must be holding a written book.";
 
