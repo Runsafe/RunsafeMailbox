@@ -1,7 +1,6 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.api.database.IRow;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
@@ -27,14 +26,11 @@ public class MailboxRepository extends Repository
 	public RunsafeInventory getMailbox(RunsafePlayer player)
 	{
 		String playerName = player.getName();
-		IRow data = this.database.QueryRow(
-				"SELECT contents FROM player_mailboxes WHERE player = ?", playerName
-		);
-
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 27, String.format("%s's Mailbox", playerName));
 
+		String data = this.database.QueryString("SELECT contents FROM player_mailboxes WHERE player = ?", playerName);
 		if (data != null)
-			inventory.unserialize(data.String("contents"));
+			inventory.unserialize(data);
 
 		return inventory;
 	}
@@ -54,10 +50,10 @@ public class MailboxRepository extends Repository
 		HashMap<Integer, List<String>> versions = new HashMap<Integer, List<String>>();
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
-				"CREATE TABLE `player_mailboxes` (" +
-						"`player` varchar(50) NOT NULL," +
-						"`contents` longtext," +
-						"PRIMARY KEY (`player`)" +
+			"CREATE TABLE `player_mailboxes` (" +
+				"`player` varchar(50) NOT NULL," +
+				"`contents` longtext," +
+				"PRIMARY KEY (`player`)" +
 				")"
 		);
 		versions.put(1, sql);

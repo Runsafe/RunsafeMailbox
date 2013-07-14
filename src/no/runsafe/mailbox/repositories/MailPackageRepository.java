@@ -1,7 +1,6 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.api.database.IRow;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
@@ -25,11 +24,11 @@ public class MailPackageRepository extends Repository
 
 	public RunsafeInventory getMailPackage(int packageID)
 	{
-		IRow data = this.database.QueryRow("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "");
 
+		String data = this.database.QueryString("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
 		if (data != null)
-			inventory.unserialize(data.String("contents"));
+			inventory.unserialize(data);
 
 		return inventory;
 	}
@@ -37,11 +36,8 @@ public class MailPackageRepository extends Repository
 	public int newPackage(RunsafeInventory contents)
 	{
 		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-		IRow data = this.database.QueryRow("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
-		if (data != null)
-			return data.Integer("ID");
-
-		return 0;
+		Integer id = this.database.QueryInteger("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
+		return id == null ? 0 : id;
 	}
 
 	public void removePackage(int packageID)
@@ -55,10 +51,10 @@ public class MailPackageRepository extends Repository
 		HashMap<Integer, List<String>> versions = new HashMap<Integer, List<String>>();
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
-				"CREATE TABLE `mail_packages` (" +
-					"`ID` int(10) unsigned NOT NULL AUTO_INCREMENT," +
-					"`contents` longtext," +
-					"PRIMARY KEY (`ID`)" +
+			"CREATE TABLE `mail_packages` (" +
+				"`ID` int(10) unsigned NOT NULL AUTO_INCREMENT," +
+				"`contents` longtext," +
+				"PRIMARY KEY (`ID`)" +
 				")"
 		);
 		versions.put(1, sql);
