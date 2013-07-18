@@ -23,7 +23,7 @@ public class InventoryClick implements IInventoryClick
 			{
 				RunsafePlayer player = event.getWhoClicked();
 				player.sendColouredMessage("&cYou cannot do that.");
-				event.setCancelled(true);
+				event.cancel();
 			}
 		}
 	}
