@@ -9,7 +9,7 @@ import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailSender;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class SendBook extends PlayerCommand
 {
@@ -19,8 +19,9 @@ public class SendBook extends PlayerCommand
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
+
 	@Override
-	public String OnExecute(RunsafePlayer executor, HashMap<String, String> parameters)
+	public String OnExecute(RunsafePlayer executor, Map<String, String> parameters)
 	{
 		RunsafePlayer player = RunsafeServer.Instance.getPlayer(parameters.get("player"));
 

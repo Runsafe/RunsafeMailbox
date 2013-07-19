@@ -4,7 +4,7 @@ import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class ViewMailbox extends PlayerCommand
 {
@@ -15,7 +15,7 @@ public class ViewMailbox extends PlayerCommand
 	}
 
 	@Override
-	public String OnExecute(RunsafePlayer executor, HashMap<String, String> parameters)
+	public String OnExecute(RunsafePlayer executor, Map<String, String> parameters)
 	{
 		this.mailHandler.openMailbox(executor, executor);
 		return null;
