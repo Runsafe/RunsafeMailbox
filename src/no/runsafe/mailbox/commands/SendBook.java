@@ -1,5 +1,6 @@
 package no.runsafe.mailbox.commands;
 
+import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.RunsafeServer;
@@ -15,7 +16,7 @@ public class SendBook extends PlayerCommand
 {
 	public SendBook(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", "player");
+		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new PlayerArgument());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}

@@ -1,5 +1,6 @@
 package no.runsafe.mailbox.commands;
 
+import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.player.RunsafePlayer;
@@ -12,7 +13,7 @@ public class SendMail extends PlayerCommand
 {
 	public SendMail(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("send", "Sends mail to another player", "runsafe.mailbox.send", "player");
+		super("send", "Sends mail to another player", "runsafe.mailbox.send", new PlayerArgument());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
