@@ -46,6 +46,7 @@ public class SendBook extends PlayerCommand
 			return "&cYou must be holding a written book.";
 
 		this.mailSender.sendItemInHand(player, executor);
+		this.mailHandler.removeMailBookCost(executor);
 		return null;
 	}
 

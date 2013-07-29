@@ -228,6 +228,11 @@ public class MailHandler implements IConfigurationChanged
 		return player.getInventory().contains(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
 	}
 
+	public void removeMailBookCost(RunsafePlayer player)
+	{
+		player.removeItem(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
+	}
+
 	private void removeMailCost(RunsafePlayer player)
 	{
 		int currentTaken = 0;
