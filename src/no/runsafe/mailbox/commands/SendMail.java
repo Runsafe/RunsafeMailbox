@@ -2,8 +2,8 @@ package no.runsafe.mailbox.commands;
 
 import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeServer;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailSender;
 
@@ -19,9 +19,9 @@ public class SendMail extends PlayerCommand
 	}
 
 	@Override
-	public String OnExecute(RunsafePlayer executor, Map<String, String> parameters)
+	public String OnExecute(IPlayer executor, Map<String, String> parameters)
 	{
-		RunsafePlayer player = RunsafeServer.Instance.getPlayer(parameters.get("player"));
+		IPlayer player = RunsafeServer.Instance.getPlayer(parameters.get("player"));
 
 		if (player == null)
 			return "&cThat player does not exist.";

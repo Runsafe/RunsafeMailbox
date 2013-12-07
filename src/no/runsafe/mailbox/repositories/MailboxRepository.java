@@ -2,9 +2,9 @@ package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.Repository;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class MailboxRepository extends Repository
 		return "player_mailboxes";
 	}
 
-	public RunsafeInventory getMailbox(RunsafePlayer player)
+	public RunsafeInventory getMailbox(IPlayer player)
 	{
 		String playerName = player.getName();
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 27, String.format("%s's Mailbox", playerName));
@@ -35,7 +35,7 @@ public class MailboxRepository extends Repository
 		return inventory;
 	}
 
-	public void updateMailbox(RunsafePlayer player, RunsafeInventory inventory)
+	public void updateMailbox(IPlayer player, RunsafeInventory inventory)
 	{
 		String contents = inventory.serialize();
 		this.database.Execute(

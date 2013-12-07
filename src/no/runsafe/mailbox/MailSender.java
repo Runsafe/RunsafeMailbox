@@ -1,9 +1,9 @@
 package no.runsafe.mailbox;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
 
@@ -15,7 +15,7 @@ public class MailSender
 		this.mailPackageRepository = mailPackageRepository;
 	}
 
-	public void sendMail(RunsafePlayer recipient, String sender, RunsafeInventory inventory)
+	public void sendMail(IPlayer recipient, String sender, RunsafeInventory inventory)
 	{
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);
 		mailbox.addItems(this.packageMail(sender, inventory));
@@ -24,7 +24,7 @@ public class MailSender
 		this.sendNotification(recipient);
 	}
 
-	public void sendItemInHand(RunsafePlayer recipient, RunsafePlayer executor)
+	public void sendItemInHand(IPlayer recipient, IPlayer executor)
 	{
 		RunsafeMeta item = executor.getItemInHand();
 		item.addLore("Sent by " + executor.getName());
@@ -37,13 +37,13 @@ public class MailSender
 		this.sendNotification(recipient);
 	}
 
-	private void sendNotification(RunsafePlayer player)
+	private void sendNotification(IPlayer player)
 	{
 		if (player.isOnline())
 			player.sendColouredMessage("&3You just received mail!");
 	}
 
-	public boolean hasFreeMailboxSpace(RunsafePlayer mailboxOwner)
+	public boolean hasFreeMailboxSpace(IPlayer mailboxOwner)
 	{
 		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
 		return inventory.getContents().size() < inventory.getSize();

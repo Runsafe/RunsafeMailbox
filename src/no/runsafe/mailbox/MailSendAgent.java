@@ -1,11 +1,11 @@
 package no.runsafe.mailbox;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class MailSendAgent
 {
-	public MailSendAgent(RunsafePlayer recipient, RunsafeInventory inventory)
+	public MailSendAgent(IPlayer recipient, RunsafeInventory inventory)
 	{
 		this.recipient = recipient;
 		this.inventory = inventory;
@@ -16,11 +16,11 @@ public class MailSendAgent
 		return this.inventory;
 	}
 
-	public RunsafePlayer getRecipient()
+	public IPlayer getRecipient()
 	{
 		return this.recipient;
 	}
 
 	private final RunsafeInventory inventory;
-	private final RunsafePlayer recipient;
+	private final IPlayer recipient;
 }

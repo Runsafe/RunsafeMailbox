@@ -1,7 +1,7 @@
 package no.runsafe.mailbox.commands;
 
 import no.runsafe.framework.api.command.player.PlayerCommand;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.mailbox.MailHandler;
 
 import java.util.Map;
@@ -15,7 +15,7 @@ public class ViewMailbox extends PlayerCommand
 	}
 
 	@Override
-	public String OnExecute(RunsafePlayer executor, Map<String, String> parameters)
+	public String OnExecute(IPlayer executor, Map<String, String> parameters)
 	{
 		this.mailHandler.openMailbox(executor, executor);
 		return null;

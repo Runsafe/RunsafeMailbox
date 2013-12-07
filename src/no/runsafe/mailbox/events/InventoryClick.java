@@ -1,10 +1,10 @@
 package no.runsafe.mailbox.events;
 
 import no.runsafe.framework.api.event.inventory.IInventoryClick;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.event.inventory.RunsafeInventoryClickEvent;
 import no.runsafe.framework.minecraft.inventory.RunsafeAnvilInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class InventoryClick implements IInventoryClick
 {
@@ -21,7 +21,7 @@ public class InventoryClick implements IInventoryClick
 		{
 			if (displayName.startsWith("Mail Package #"))
 			{
-				RunsafePlayer player = event.getWhoClicked();
+				IPlayer player = event.getWhoClicked();
 				player.sendColouredMessage("&cYou cannot do that.");
 				event.cancel();
 			}

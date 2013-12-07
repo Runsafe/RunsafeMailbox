@@ -1,8 +1,8 @@
 package no.runsafe.mailbox.events;
 
 import no.runsafe.framework.api.event.inventory.IInventoryClosed;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.event.inventory.RunsafeInventoryCloseEvent;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.MailHandler;
 
 public class CloseInventory implements IInventoryClosed
@@ -15,7 +15,7 @@ public class CloseInventory implements IInventoryClosed
 	@Override
 	public void OnInventoryClosed(RunsafeInventoryCloseEvent event)
 	{
-		RunsafePlayer player = event.getPlayer();
+		IPlayer player = event.getPlayer();
 
 		if (this.mailHandler.isViewingSendAgent(player))
 			player.sendColouredMessage(this.mailHandler.sendOutstandingMail(player));

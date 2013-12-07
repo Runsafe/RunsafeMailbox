@@ -1,11 +1,11 @@
 package no.runsafe.mailbox;
 
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 
 public class MailView
 {
-	public MailView(String owner, RunsafeInventory mailbox, RunsafePlayer viewer)
+	public MailView(String owner, RunsafeInventory mailbox, IPlayer viewer)
 	{
 		this.owner = owner;
 		this.mailbox = mailbox;
@@ -22,12 +22,12 @@ public class MailView
 		return this.mailbox;
 	}
 
-	public RunsafePlayer getViewer()
+	public IPlayer getViewer()
 	{
 		return this.viewer;
 	}
 
 	private final String owner;
 	private final RunsafeInventory mailbox;
-	private final RunsafePlayer viewer;
+	private final IPlayer viewer;
 }

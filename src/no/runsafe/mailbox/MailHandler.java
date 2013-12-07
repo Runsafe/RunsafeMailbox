@@ -2,11 +2,11 @@ package no.runsafe.mailbox;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafePlayer;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
 import org.bukkit.Material;
@@ -23,7 +23,7 @@ public class MailHandler implements IConfigurationChanged
 		this.mailPackageRepository = mailPackageRepository;
 	}
 
-	public void openMailbox(RunsafePlayer viewer, RunsafePlayer mailboxOwner)
+	public void openMailbox(IPlayer viewer, IPlayer mailboxOwner)
 	{
 		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
 
@@ -38,7 +38,7 @@ public class MailHandler implements IConfigurationChanged
 		}
 	}
 
-	public void openMailSender(RunsafePlayer sender, RunsafePlayer recipient)
+	public void openMailSender(IPlayer sender, IPlayer recipient)
 	{
 		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText() + ".");
 		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "Mail to " + recipient.getName());
@@ -46,17 +46,17 @@ public class MailHandler implements IConfigurationChanged
 		sender.openInventory(inventory);
 	}
 
-	public boolean isViewingSendAgent(RunsafePlayer sender)
+	public boolean isViewingSendAgent(IPlayer sender)
 	{
 		return this.openSendAgents.containsKey(sender.getName());
 	}
 
-	public boolean isViewingMailbox(RunsafePlayer viewer)
+	public boolean isViewingMailbox(IPlayer viewer)
 	{
 		return this.openMailboxes.containsKey(viewer.getName());
 	}
 
-	public void closeMailbox(RunsafePlayer viewer)
+	public void closeMailbox(IPlayer viewer)
 	{
 		if (this.isViewingMailbox(viewer))
 		{
@@ -65,13 +65,13 @@ public class MailHandler implements IConfigurationChanged
 		}
 	}
 
-	public void refreshMailbox(RunsafePlayer viewer, RunsafePlayer owner)
+	public void refreshMailbox(IPlayer viewer, IPlayer owner)
 	{
 		this.closeMailbox(viewer);
 		this.openMailbox(viewer, owner);
 	}
 
-	public void handleMailboxClose(RunsafePlayer owner)
+	public void handleMailboxClose(IPlayer owner)
 	{
 		boolean hasRemoved = false;
 		RunsafeInventory mailbox = this.openMailboxes.get(owner.getName()).getMailbox();
@@ -103,7 +103,7 @@ public class MailHandler implements IConfigurationChanged
 		this.closeMailbox(owner);
 	}
 
-	public String sendOutstandingMail(RunsafePlayer sender)
+	public String sendOutstandingMail(IPlayer sender)
 	{
 		if (this.isViewingSendAgent(sender))
 		{
@@ -118,7 +118,7 @@ public class MailHandler implements IConfigurationChanged
 				return "&cYou do not have enough money to send mail. Sending mail costs " + this.getMailCostText() + ".";
 			}
 
-			RunsafePlayer recipient = agent.getRecipient();
+			IPlayer recipient = agent.getRecipient();
 
 			// Check the recipient has enough free space in their inbox.
 			if (!this.mailSender.hasFreeMailboxSpace(recipient))
@@ -138,13 +138,13 @@ public class MailHandler implements IConfigurationChanged
 		return null;
 	}
 
-	public int getInboxCount(RunsafePlayer player)
+	public int getInboxCount(IPlayer player)
 	{
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(player);
 		return mailbox.getContents().size();
 	}
 
-	public void openPackage(RunsafePlayer player, int packageID)
+	public void openPackage(IPlayer player, int packageID)
 	{
 		RunsafeInventory mailPackage = this.mailPackageRepository.getMailPackage(packageID);
 		RunsafeInventory playerInventory = player.getInventory();
@@ -192,7 +192,7 @@ public class MailHandler implements IConfigurationChanged
 		return this.mailSendBookAmount + " " + Material.getMaterial(this.mailSendBookCurrency).name().replace("_", " ").toLowerCase();
 	}
 
-	private void returnGoodsFromAgent(RunsafePlayer player, MailSendAgent agent)
+	private void returnGoodsFromAgent(IPlayer player, MailSendAgent agent)
 	{
 		RunsafeInventory inventory = player.getInventory();
 		boolean sendWarning = false;
@@ -213,27 +213,27 @@ public class MailHandler implements IConfigurationChanged
 		player.updateInventory();
 	}
 
-	public void removeAgent(RunsafePlayer sender)
+	public void removeAgent(IPlayer sender)
 	{
 		this.openSendAgents.remove(sender.getName());
 	}
 
-	public boolean hasMailCost(RunsafePlayer player)
+	public boolean hasMailCost(IPlayer player)
 	{
 		return player.getInventory().contains(Item.get(this.mailSendCurrency), this.mailSendCost);
 	}
 
-	public boolean hasMailBookCost(RunsafePlayer player)
+	public boolean hasMailBookCost(IPlayer player)
 	{
 		return player.getInventory().contains(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
 	}
 
-	public void removeMailBookCost(RunsafePlayer player)
+	public void removeMailBookCost(IPlayer player)
 	{
 		player.removeItem(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
 	}
 
-	private void removeMailCost(RunsafePlayer player)
+	private void removeMailCost(IPlayer player)
 	{
 		int currentTaken = 0;
 		RunsafeInventory inventory = player.getInventory();
@@ -256,7 +256,7 @@ public class MailHandler implements IConfigurationChanged
 		}
 	}
 
-	private void refreshMailboxViewers(RunsafePlayer owner)
+	private void refreshMailboxViewers(IPlayer owner)
 	{
 		for (Map.Entry<String, MailView> openMailbox : this.openMailboxes.entrySet())
 			if (openMailbox.getKey().equals(owner.getName()))
