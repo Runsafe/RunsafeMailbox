@@ -1,8 +1,8 @@
 package no.runsafe.mailbox.repositories;
 
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.Repository;
-import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 import java.util.ArrayList;
@@ -11,9 +11,10 @@ import java.util.List;
 
 public class MailPackageRepository extends Repository
 {
-	public MailPackageRepository(IDatabase database)
+	public MailPackageRepository(IDatabase database, IServer server)
 	{
 		this.database = database;
+		this.server = server;
 	}
 
 	@Override
@@ -24,7 +25,7 @@ public class MailPackageRepository extends Repository
 
 	public RunsafeInventory getMailPackage(int packageID)
 	{
-		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "");
+		RunsafeInventory inventory = server.createInventory(null, 54, "");
 
 		String data = this.database.QueryString("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
 		if (data != null)
@@ -62,4 +63,5 @@ public class MailPackageRepository extends Repository
 	}
 
 	private final IDatabase database;
+	private final IServer server;
 }

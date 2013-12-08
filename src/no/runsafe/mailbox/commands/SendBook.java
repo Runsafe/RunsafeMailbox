@@ -1,12 +1,12 @@
 package no.runsafe.mailbox.commands;
 
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
+import no.runsafe.framework.api.player.IAmbiguousPlayer;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.minecraft.player.RunsafeAmbiguousPlayer;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailSender;
 
@@ -14,22 +14,23 @@ import java.util.Map;
 
 public class SendBook extends PlayerCommand
 {
-	public SendBook(MailHandler mailHandler, MailSender mailSender)
+	public SendBook(MailHandler mailHandler, MailSender mailSender, IServer server)
 	{
 		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new PlayerArgument());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
+		this.server = server;
 	}
 
 	@Override
 	public String OnExecute(IPlayer executor, Map<String, String> parameters)
 	{
-		IPlayer player = RunsafeServer.Instance.getPlayer(parameters.get("player"));
+		IPlayer player = server.getPlayer(parameters.get("player"));
 
 		if (player == null)
 			return "&cThat player does not exist.";
 
-		if (player instanceof RunsafeAmbiguousPlayer)
+		if (player instanceof IAmbiguousPlayer)
 			return player.toString();
 
 		if (player.getName().equalsIgnoreCase(executor.getName()))
@@ -50,6 +51,7 @@ public class SendBook extends PlayerCommand
 		return null;
 	}
 
-	private MailHandler mailHandler;
-	private MailSender mailSender;
+	private final MailHandler mailHandler;
+	private final MailSender mailSender;
+	private final IServer server;
 }

@@ -1,9 +1,9 @@
 package no.runsafe.mailbox.repositories;
 
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 import java.util.ArrayList;
@@ -12,9 +12,10 @@ import java.util.List;
 
 public class MailboxRepository extends Repository
 {
-	public MailboxRepository(IDatabase database)
+	public MailboxRepository(IDatabase database, IServer server)
 	{
 		this.database = database;
+		this.server = server;
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class MailboxRepository extends Repository
 	public RunsafeInventory getMailbox(IPlayer player)
 	{
 		String playerName = player.getName();
-		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 27, String.format("%s's Mailbox", playerName));
+		RunsafeInventory inventory = server.createInventory(null, 27, String.format("%s's Mailbox", playerName));
 
 		String data = this.database.QueryString("SELECT contents FROM player_mailboxes WHERE player = ?", playerName);
 		if (data != null)
@@ -61,4 +62,5 @@ public class MailboxRepository extends Repository
 	}
 
 	private final IDatabase database;
+	private final IServer server;
 }

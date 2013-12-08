@@ -1,10 +1,10 @@
 package no.runsafe.mailbox;
 
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.RunsafeServer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
@@ -16,11 +16,12 @@ import java.util.Map;
 
 public class MailHandler implements IConfigurationChanged
 {
-	public MailHandler(MailSender mailSender, MailboxRepository mailboxRepository, MailPackageRepository mailPackageRepository)
+	public MailHandler(MailSender mailSender, MailboxRepository mailboxRepository, MailPackageRepository mailPackageRepository, IServer server)
 	{
 		this.mailSender = mailSender;
 		this.mailboxRepository = mailboxRepository;
 		this.mailPackageRepository = mailPackageRepository;
+		this.server = server;
 	}
 
 	public void openMailbox(IPlayer viewer, IPlayer mailboxOwner)
@@ -41,7 +42,7 @@ public class MailHandler implements IConfigurationChanged
 	public void openMailSender(IPlayer sender, IPlayer recipient)
 	{
 		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText() + ".");
-		RunsafeInventory inventory = RunsafeServer.Instance.createInventory(null, 54, "Mail to " + recipient.getName());
+		RunsafeInventory inventory = server.createInventory(null, 54, "Mail to " + recipient.getName());
 		this.openSendAgents.put(sender.getName(), new MailSendAgent(recipient, inventory));
 		sender.openInventory(inventory);
 	}
@@ -277,6 +278,7 @@ public class MailHandler implements IConfigurationChanged
 	public final HashMap<String, MailSendAgent> openSendAgents = new HashMap<String, MailSendAgent>();
 	private final MailboxRepository mailboxRepository;
 	private final MailPackageRepository mailPackageRepository;
+	private final IServer server;
 	private int mailSendCurrency;
 	private int mailSendCost;
 	private int mailSendBookCurrency;
