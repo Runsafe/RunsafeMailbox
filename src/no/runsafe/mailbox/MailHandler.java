@@ -9,7 +9,6 @@ import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
-import org.bukkit.Material;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -185,12 +184,20 @@ public class MailHandler implements IConfigurationChanged
 
 	public String getMailCostText()
 	{
-		return this.mailSendCost + " " + Material.getMaterial(this.mailSendCurrency).name().replace("_", " ").toLowerCase();
+		return String.format("%d %s", this.mailSendCost, currencyName(mailSendCurrency));
 	}
 
 	public String getMailBookCostText()
 	{
-		return this.mailSendBookAmount + " " + Material.getMaterial(this.mailSendBookCurrency).name().replace("_", " ").toLowerCase();
+		return String.format("%d %s", this.mailSendBookAmount, currencyName(mailSendBookCurrency));
+	}
+
+	private String currencyName(int currencyItem)
+	{
+		Item item = Item.get(mailSendBookCurrency);
+		if (item == null)
+			return null;
+		return item.getType().name().replace("_", " ").toLowerCase();
 	}
 
 	private void returnGoodsFromAgent(IPlayer player, MailSendAgent agent)
