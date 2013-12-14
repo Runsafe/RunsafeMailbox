@@ -17,7 +17,6 @@ public class Plugin extends RunsafeConfigurablePlugin
 	@Override
 	protected void PluginSetup()
 	{
-		this.addComponent(MailSender.class);
 		this.addComponent(MailHandler.class);
 
 		// Repositories
@@ -36,5 +35,8 @@ public class Plugin extends RunsafeConfigurablePlugin
 		mailCommand.addSubCommand(getInstance(SendMail.class));
 		mailCommand.addSubCommand(getInstance(SendBook.class));
 		this.addComponent(mailCommand);
+
+		// Make the MailSender API accessible globally
+		exportAPI(getInstance(MailSender.class));
 	}
 }
