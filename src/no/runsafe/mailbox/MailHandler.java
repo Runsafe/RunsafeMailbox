@@ -192,9 +192,8 @@ public class MailHandler implements IConfigurationChanged
 		return String.format("%d %s", this.mailSendBookAmount, currencyName(mailSendBookCurrency));
 	}
 
-	private String currencyName(int currencyItem)
+	private String currencyName(Item item)
 	{
-		Item item = Item.get(currencyItem);
 		if (item == null)
 			return null;
 		return item.getType().name().replace("_", " ").toLowerCase();
@@ -228,40 +227,22 @@ public class MailHandler implements IConfigurationChanged
 
 	public boolean hasMailCost(IPlayer player)
 	{
-		return player.getInventory().contains(Item.get(this.mailSendCurrency), this.mailSendCost);
+		return player.hasItem(this.mailSendCurrency, this.mailSendCost);
 	}
 
 	public boolean hasMailBookCost(IPlayer player)
 	{
-		return player.getInventory().contains(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
+		return player.hasItem(this.mailSendBookCurrency, this.mailSendBookAmount);
 	}
 
 	public void removeMailBookCost(IPlayer player)
 	{
-		player.removeItem(Item.get(this.mailSendBookCurrency), this.mailSendBookAmount);
+		player.removeItem(this.mailSendBookCurrency, this.mailSendBookAmount);
 	}
 
 	private void removeMailCost(IPlayer player)
 	{
-		int currentTaken = 0;
-		RunsafeInventory inventory = player.getInventory();
-		for (RunsafeMeta itemStack : inventory.getContents())
-		{
-			if (itemStack.getItemId() == this.mailSendCurrency)
-			{
-				int need = this.mailSendCost - currentTaken;
-				if (itemStack.getAmount() <= need)
-				{
-					currentTaken += itemStack.getAmount();
-					inventory.remove(itemStack);
-				}
-				else
-				{
-					itemStack.remove(need);
-					currentTaken += need;
-				}
-			}
-		}
+		player.removeItem(mailSendCurrency, mailSendCost);
 	}
 
 	private void refreshMailboxViewers(IPlayer owner)
@@ -274,10 +255,10 @@ public class MailHandler implements IConfigurationChanged
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
-		this.mailSendCurrency = configuration.getConfigValueAsInt("mailSendCurrency");
-		this.mailSendCost = configuration.getConfigValueAsInt("mailSendAmount");
-		this.mailSendBookCurrency = configuration.getConfigValueAsInt("mailSendBookCurrency");
-		this.mailSendBookAmount = configuration.getConfigValueAsInt("mailSendBookAmount");
+		this.mailSendCurrency = configuration.getConfigValueAsItem("mail.items.currency");
+		this.mailSendCost = configuration.getConfigValueAsInt("mail.items.amount");
+		this.mailSendBookCurrency = configuration.getConfigValueAsItem("mail.book.currency");
+		this.mailSendBookAmount = configuration.getConfigValueAsInt("mail.book.amount");
 	}
 
 	private final MailSender mailSender;
@@ -286,8 +267,8 @@ public class MailHandler implements IConfigurationChanged
 	private final MailboxRepository mailboxRepository;
 	private final MailPackageRepository mailPackageRepository;
 	private final IServer server;
-	private int mailSendCurrency;
+	private Item mailSendCurrency;
 	private int mailSendCost;
-	private int mailSendBookCurrency;
+	private Item mailSendBookCurrency;
 	private int mailSendBookAmount;
 }
