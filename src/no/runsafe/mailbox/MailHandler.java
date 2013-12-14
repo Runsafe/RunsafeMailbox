@@ -194,7 +194,7 @@ public class MailHandler implements IConfigurationChanged
 
 	private String currencyName(int currencyItem)
 	{
-		Item item = Item.get(mailSendBookCurrency);
+		Item item = Item.get(currencyItem);
 		if (item == null)
 			return null;
 		return item.getType().name().replace("_", " ").toLowerCase();
