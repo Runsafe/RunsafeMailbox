@@ -2,6 +2,9 @@ package no.runsafe.mailbox;
 
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
+import no.runsafe.framework.features.Commands;
+import no.runsafe.framework.features.Database;
+import no.runsafe.framework.features.Events;
 import no.runsafe.mailbox.commands.SendBook;
 import no.runsafe.mailbox.commands.SendMail;
 import no.runsafe.mailbox.commands.ViewMailbox;
@@ -17,6 +20,12 @@ public class Plugin extends RunsafeConfigurablePlugin
 	@Override
 	protected void PluginSetup()
 	{
+		// Framework features
+		addComponent(Commands.class);
+		addComponent(Events.class);
+		addComponent(Database.class);
+
+		// Plugin components
 		this.addComponent(MailHandler.class);
 
 		// Repositories
