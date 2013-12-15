@@ -25,12 +25,12 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(Events.class);
 		addComponent(Database.class);
 
-		// Plugin components
-		this.addComponent(MailHandler.class);
-
 		// Repositories
 		this.addComponent(MailboxRepository.class);
 		this.addComponent(MailPackageRepository.class);
+
+		// Plugin components
+		this.addComponent(MailHandler.class);
 
 		// Events
 		this.addComponent(CloseInventory.class);
@@ -38,14 +38,14 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(PlayerLogin.class);
 		this.addComponent(InventoryClick.class);
 
+		// Make the MailSender API accessible globally
+		exportAPI(getInstance(MailSender.class));
+
 		// Commands
 		Command mailCommand = new Command("mail", "Mail related commands", null);
 		mailCommand.addSubCommand(getInstance(ViewMailbox.class));
 		mailCommand.addSubCommand(getInstance(SendMail.class));
 		mailCommand.addSubCommand(getInstance(SendBook.class));
 		this.addComponent(mailCommand);
-
-		// Make the MailSender API accessible globally
-		exportAPI(getInstance(MailSender.class));
 	}
 }
