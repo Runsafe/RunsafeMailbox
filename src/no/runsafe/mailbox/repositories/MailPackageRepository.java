@@ -39,7 +39,7 @@ public class MailPackageRepository extends Repository
 	{
 		ITransaction transaction = database.Isolate();
 		transaction.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-		Integer id = transaction.QueryInteger("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
+		Integer id = transaction.QueryInteger("SELECT LAST_INSERT_ID()");
 		transaction.Commit();
 		return id == null ? 0 : id;
 	}
