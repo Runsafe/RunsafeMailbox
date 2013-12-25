@@ -2,6 +2,7 @@ package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.IDatabase;
+import no.runsafe.framework.api.database.ITransaction;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
@@ -36,8 +37,10 @@ public class MailPackageRepository extends Repository
 
 	public int newPackage(RunsafeInventory contents)
 	{
-		this.database.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-		Integer id = this.database.QueryInteger("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
+		ITransaction transaction = database.Isolate();
+		transaction.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
+		Integer id = transaction.QueryInteger("SELECT LAST_INSERT_ID() AS ID FROM mail_packages");
+		transaction.Commit();
 		return id == null ? 0 : id;
 	}
 
