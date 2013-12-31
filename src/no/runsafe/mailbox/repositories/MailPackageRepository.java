@@ -28,7 +28,7 @@ public class MailPackageRepository extends Repository
 	{
 		RunsafeInventory inventory = server.createInventory(null, 54, "");
 
-		String data = this.database.QueryString("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
+		String data = this.database.queryString("SELECT contents FROM mail_packages WHERE ID = ?", packageID);
 		if (data != null)
 			inventory.unserialize(data);
 
@@ -37,16 +37,16 @@ public class MailPackageRepository extends Repository
 
 	public int newPackage(RunsafeInventory contents)
 	{
-		ITransaction transaction = database.Isolate();
-		transaction.Execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
-		Integer id = transaction.QueryInteger("SELECT LAST_INSERT_ID()");
+		ITransaction transaction = database.isolate();
+		transaction.execute("INSERT INTO mail_packages (contents) VALUES(?)", contents.serialize());
+		Integer id = transaction.queryInteger("SELECT LAST_INSERT_ID()");
 		transaction.Commit();
 		return id == null ? 0 : id;
 	}
 
 	public void removePackage(int packageID)
 	{
-		this.database.Execute("DELETE FROM mail_packages WHERE ID = ?", packageID);
+		this.database.execute("DELETE FROM mail_packages WHERE ID = ?", packageID);
 	}
 
 	@Override
