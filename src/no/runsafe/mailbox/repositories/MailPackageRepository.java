@@ -53,7 +53,7 @@ public class MailPackageRepository extends Repository
 	@Override
 	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
 	{
-		HashMap<Integer, List<String>> versions = new LinkedHashMap<Integer, List<String>>();
+		HashMap<Integer, List<String>> versions = new LinkedHashMap<Integer, List<String>>(1);
 		ArrayList<String> sql = new ArrayList<String>();
 		sql.add(
 			"CREATE TABLE `mail_packages` (" +
