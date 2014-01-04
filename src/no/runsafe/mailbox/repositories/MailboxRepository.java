@@ -2,14 +2,11 @@ package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.IDatabase;
+import no.runsafe.framework.api.database.ISchemaUpdate;
 import no.runsafe.framework.api.database.Repository;
+import no.runsafe.framework.api.database.SchemaUpdate;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class MailboxRepository extends Repository
 {
@@ -47,19 +44,19 @@ public class MailboxRepository extends Repository
 	}
 
 	@Override
-	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
+	public ISchemaUpdate getSchemaUpdateQueries()
 	{
-		HashMap<Integer, List<String>> versions = new LinkedHashMap<Integer, List<String>>(1);
-		ArrayList<String> sql = new ArrayList<String>();
-		sql.add(
+		ISchemaUpdate update = new SchemaUpdate();
+
+		update.addQueries(
 			"CREATE TABLE `player_mailboxes` (" +
 				"`player` varchar(50) NOT NULL," +
 				"`contents` longtext," +
 				"PRIMARY KEY (`player`)" +
-				")"
+			")"
 		);
-		versions.put(1, sql);
-		return versions;
+
+		return update;
 	}
 
 	private final IDatabase database;

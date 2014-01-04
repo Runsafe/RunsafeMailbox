@@ -1,15 +1,8 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.IServer;
-import no.runsafe.framework.api.database.IDatabase;
-import no.runsafe.framework.api.database.ITransaction;
-import no.runsafe.framework.api.database.Repository;
+import no.runsafe.framework.api.database.*;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class MailPackageRepository extends Repository
 {
@@ -51,19 +44,19 @@ public class MailPackageRepository extends Repository
 	}
 
 	@Override
-	public HashMap<Integer, List<String>> getSchemaUpdateQueries()
+	public ISchemaUpdate getSchemaUpdateQueries()
 	{
-		HashMap<Integer, List<String>> versions = new LinkedHashMap<Integer, List<String>>(1);
-		ArrayList<String> sql = new ArrayList<String>();
-		sql.add(
+		ISchemaUpdate update = new SchemaUpdate();
+
+		update.addQueries(
 			"CREATE TABLE `mail_packages` (" +
 				"`ID` int(10) unsigned NOT NULL AUTO_INCREMENT," +
 				"`contents` longtext," +
 				"PRIMARY KEY (`ID`)" +
-				")"
+			")"
 		);
-		versions.put(1, sql);
-		return versions;
+
+		return update;
 	}
 
 	private final IDatabase database;
