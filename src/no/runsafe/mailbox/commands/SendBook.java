@@ -1,6 +1,6 @@
 package no.runsafe.mailbox.commands;
 
-import no.runsafe.framework.api.IServer;
+import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.player.IAmbiguousPlayer;
@@ -10,22 +10,19 @@ import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailSender;
 
-import java.util.Map;
-
 public class SendBook extends PlayerCommand
 {
-	public SendBook(MailHandler mailHandler, MailSender mailSender, IServer server)
+	public SendBook(MailHandler mailHandler, MailSender mailSender)
 	{
 		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new PlayerArgument());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
-		this.server = server;
 	}
 
 	@Override
-	public String OnExecute(IPlayer executor, Map<String, String> parameters)
+	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		IPlayer player = server.getPlayer(parameters.get("player"));
+		IPlayer player = parameters.getPlayer("player");
 
 		if (player == null)
 			return "&cThat player does not exist.";
@@ -53,5 +50,4 @@ public class SendBook extends PlayerCommand
 
 	private final MailHandler mailHandler;
 	private final MailSender mailSender;
-	private final IServer server;
 }
