@@ -1,9 +1,8 @@
 package no.runsafe.mailbox.commands;
 
+import no.runsafe.framework.api.command.argument.AnyPlayerRequired;
 import no.runsafe.framework.api.command.argument.IArgumentList;
-import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
-import no.runsafe.framework.api.player.IAmbiguousPlayer;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
@@ -14,7 +13,7 @@ public class SendBook extends PlayerCommand
 {
 	public SendBook(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new PlayerArgument());
+		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new AnyPlayerRequired());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
@@ -26,9 +25,6 @@ public class SendBook extends PlayerCommand
 
 		if (player == null)
 			return "&cThat player does not exist.";
-
-		if (player instanceof IAmbiguousPlayer)
-			return player.toString();
 
 		if (player.getName().equalsIgnoreCase(executor.getName()))
 			return "&cYou cannot mail things to yourself.";

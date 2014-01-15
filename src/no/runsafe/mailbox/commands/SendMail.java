@@ -1,9 +1,8 @@
 package no.runsafe.mailbox.commands;
 
+import no.runsafe.framework.api.command.argument.AnyPlayerRequired;
 import no.runsafe.framework.api.command.argument.IArgumentList;
-import no.runsafe.framework.api.command.argument.PlayerArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
-import no.runsafe.framework.api.player.IAmbiguousPlayer;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailSender;
@@ -12,7 +11,7 @@ public class SendMail extends PlayerCommand
 {
 	public SendMail(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("send", "Sends mail to another player", "runsafe.mailbox.send", new PlayerArgument());
+		super("send", "Sends mail to another player", "runsafe.mailbox.send", new AnyPlayerRequired());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
@@ -24,9 +23,6 @@ public class SendMail extends PlayerCommand
 
 		if (player == null)
 			return "&cThat player does not exist.";
-
-		if (player instanceof IAmbiguousPlayer)
-			return player.toString();
 
 		if (player.getName().equals(executor.getName()))
 			return "&cYou cannot send mail to yourself.";
