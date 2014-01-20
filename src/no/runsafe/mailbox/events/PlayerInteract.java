@@ -1,7 +1,9 @@
 package no.runsafe.mailbox.events;
 
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
+import no.runsafe.framework.api.event.player.IPlayerRightClickBlock;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
@@ -9,7 +11,7 @@ import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailboxBlocks;
 
-public class PlayerInteract implements IPlayerInteractEvent
+public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBlock
 {
 	public PlayerInteract(MailHandler mailHandler, MailboxBlocks blocks)
 	{
@@ -36,10 +38,17 @@ public class PlayerInteract implements IPlayerInteractEvent
 				}
 			}
 		}
+	}
 
-		ILocation targetBlock = event.getTargetBlock();
-		if (targetBlock != null && targetBlock.getBlock().is(Item.Decoration.Chest) && blocks.isMailboxBlock(targetBlock))
-			mailHandler.openMailbox(event.getPlayer());
+	@Override
+	public boolean OnPlayerRightClick(IPlayer player, RunsafeMeta usingItem, IBlock targetBlock)
+	{
+		if (targetBlock.is(Item.Decoration.Chest) && blocks.isMailboxBlock(targetBlock.getLocation()))
+		{
+			mailHandler.openMailbox(player);
+			return false;
+		}
+		return true;
 	}
 
 	private final MailHandler mailHandler;
