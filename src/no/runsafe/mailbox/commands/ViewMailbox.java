@@ -16,7 +16,7 @@ public class ViewMailbox extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		this.mailHandler.openMailbox(executor, executor);
+		this.mailHandler.openMailbox(executor);
 		return null;
 	}
 

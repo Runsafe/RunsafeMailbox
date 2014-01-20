@@ -13,6 +13,7 @@ import no.runsafe.mailbox.events.InventoryClick;
 import no.runsafe.mailbox.events.PlayerInteract;
 import no.runsafe.mailbox.events.PlayerLogin;
 import no.runsafe.mailbox.repositories.MailPackageRepository;
+import no.runsafe.mailbox.repositories.MailboxObjectRepository;
 import no.runsafe.mailbox.repositories.MailboxRepository;
 
 public class Plugin extends RunsafeConfigurablePlugin
@@ -28,8 +29,10 @@ public class Plugin extends RunsafeConfigurablePlugin
 		// Repositories
 		this.addComponent(MailboxRepository.class);
 		this.addComponent(MailPackageRepository.class);
+		addComponent(MailboxObjectRepository.class);
 
 		// Plugin components
+		addComponent(MailboxBlocks.class);
 		this.addComponent(MailHandler.class);
 
 		// Events
