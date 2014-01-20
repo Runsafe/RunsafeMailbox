@@ -1,6 +1,5 @@
 package no.runsafe.mailbox.events;
 
-import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClickBlock;
