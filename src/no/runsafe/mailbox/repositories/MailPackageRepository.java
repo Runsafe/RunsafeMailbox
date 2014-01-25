@@ -6,9 +6,8 @@ import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 public class MailPackageRepository extends Repository
 {
-	public MailPackageRepository(IDatabase database, IServer server)
+	public MailPackageRepository(IServer server)
 	{
-		this.database = database;
 		this.server = server;
 	}
 
@@ -59,6 +58,5 @@ public class MailPackageRepository extends Repository
 		return update;
 	}
 
-	private final IDatabase database;
 	private final IServer server;
 }

@@ -10,9 +10,8 @@ import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 public class MailboxRepository extends Repository
 {
-	public MailboxRepository(IDatabase database, IServer server)
+	public MailboxRepository(IServer server)
 	{
-		this.database = database;
 		this.server = server;
 	}
 
@@ -59,6 +58,5 @@ public class MailboxRepository extends Repository
 		return update;
 	}
 
-	private final IDatabase database;
 	private final IServer server;
 }
