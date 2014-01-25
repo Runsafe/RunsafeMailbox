@@ -1,6 +1,7 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.ISchemaUpdate;
 import no.runsafe.framework.api.database.Repository;
@@ -26,6 +27,11 @@ public class MailboxObjectRepository extends Repository
 		return database.queryLocations("SELECT `world`, `x`, `y`, `z` FROM `mailbox_blocks`");
 	}
 
+	public List<ILocation> getBlockLocations(IWorld world)
+	{
+		return database.queryLocations("SELECT `world`, `x`, `y`, `z` FROM `mailbox_blocks` WHERE world=?", world.getName());
+	}
+
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
 	{
@@ -42,4 +48,5 @@ public class MailboxObjectRepository extends Repository
 	}
 
 	private final IDatabase database;
+
 }
