@@ -23,6 +23,11 @@ public class MailHandler implements IConfigurationChanged
 		this.server = server;
 	}
 
+	public void openMailbox(IPlayer viewer)
+	{
+		openMailbox(viewer, viewer);
+	}
+
 	public void openMailbox(IPlayer viewer, IPlayer mailboxOwner)
 	{
 		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
