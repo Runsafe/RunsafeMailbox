@@ -243,11 +243,13 @@ public class MailHandler implements IConfigurationChanged
 	public void removeMailBookCost(IPlayer player)
 	{
 		player.removeItem(this.mailSendBookCurrency, this.mailSendBookAmount);
+		player.updateInventory();
 	}
 
 	private void removeMailCost(IPlayer player)
 	{
 		player.removeItem(mailSendCurrency, mailSendCost);
+		player.updateInventory();
 	}
 
 	private void refreshMailboxViewers(IPlayer owner)
