@@ -1,6 +1,6 @@
 package no.runsafe.mailbox.commands;
 
-import no.runsafe.framework.api.command.argument.AnyPlayerRequired;
+import no.runsafe.framework.api.command.argument.Player;
 import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.player.IPlayer;
@@ -13,7 +13,7 @@ public class SendBook extends PlayerCommand
 {
 	public SendBook(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new AnyPlayerRequired());
+		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new Player.Any().require());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
@@ -21,10 +21,10 @@ public class SendBook extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		IPlayer player = parameters.getPlayer("player");
+		IPlayer player = parameters.getValue("player");
 
 		if (player == null)
-			return "&cThat player does not exist.";
+			return null;
 
 		if (player.getName().equalsIgnoreCase(executor.getName()))
 			return "&cYou cannot mail things to yourself.";
