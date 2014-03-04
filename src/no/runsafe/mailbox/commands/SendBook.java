@@ -13,7 +13,7 @@ public class SendBook extends PlayerCommand
 {
 	public SendBook(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new Player.Any().require());
+		super("sendbook", "Sends a book that you are holding", "runsafe.mailbox.send.book", new Player().require());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
