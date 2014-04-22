@@ -41,7 +41,7 @@ public class SendBook extends PlayerCommand
 
 		this.mailSender.sendItemInHand(player, executor);
 		this.mailHandler.removeMailBookCost(executor);
-		return null;
+		return "&aThe book has been sent!";
 	}
 
 	private final MailHandler mailHandler;
