@@ -8,6 +8,8 @@ import no.runsafe.framework.api.database.SchemaUpdate;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
+import javax.annotation.Nonnull;
+
 public class MailboxRepository extends Repository
 {
 	public MailboxRepository(IServer server)
@@ -15,6 +17,7 @@ public class MailboxRepository extends Repository
 		this.server = server;
 	}
 
+	@Nonnull
 	@Override
 	public String getTableName()
 	{
@@ -42,6 +45,7 @@ public class MailboxRepository extends Repository
 		);
 	}
 
+	@Nonnull
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
 	{

@@ -7,6 +7,7 @@ import no.runsafe.framework.api.database.ISchemaUpdate;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.api.database.SchemaUpdate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class MailboxObjectRepository extends Repository
@@ -16,6 +17,7 @@ public class MailboxObjectRepository extends Repository
 		this.database = database;
 	}
 
+	@Nonnull
 	@Override
 	public String getTableName()
 	{
@@ -32,6 +34,7 @@ public class MailboxObjectRepository extends Repository
 		return database.queryLocations("SELECT `world`, `x`, `y`, `z` FROM `mailbox_blocks` WHERE world=?", world.getName());
 	}
 
+	@Nonnull
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
 	{

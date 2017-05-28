@@ -4,6 +4,8 @@ import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.database.*;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
+import javax.annotation.Nonnull;
+
 public class MailPackageRepository extends Repository
 {
 	public MailPackageRepository(IServer server)
@@ -11,6 +13,7 @@ public class MailPackageRepository extends Repository
 		this.server = server;
 	}
 
+	@Nonnull
 	@Override
 	public String getTableName()
 	{
@@ -42,6 +45,7 @@ public class MailPackageRepository extends Repository
 		this.database.execute("DELETE FROM mail_packages WHERE ID = ?", packageID);
 	}
 
+	@Nonnull
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
 	{
