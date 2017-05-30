@@ -5,3 +5,4 @@ mail:
   book:
     currency: GOLD_INGOT
     amount: 10
+mailUniverse: survival
