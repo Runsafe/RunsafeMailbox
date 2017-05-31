@@ -51,5 +51,4 @@ public class MailboxObjectRepository extends Repository
 	}
 
 	private final IDatabase database;
-
 }
