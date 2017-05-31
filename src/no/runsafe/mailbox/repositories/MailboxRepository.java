@@ -1,12 +1,13 @@
 package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.IServer;
-import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.ISchemaUpdate;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.api.database.SchemaUpdate;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
+
+import javax.annotation.Nonnull;
 
 public class MailboxRepository extends Repository
 {
@@ -15,6 +16,7 @@ public class MailboxRepository extends Repository
 		this.server = server;
 	}
 
+	@Nonnull
 	@Override
 	public String getTableName()
 	{
@@ -23,10 +25,9 @@ public class MailboxRepository extends Repository
 
 	public RunsafeInventory getMailbox(IPlayer player)
 	{
-		String playerName = player.getName();
-		RunsafeInventory inventory = server.createInventory(null, 27, String.format("%s's Mailbox", playerName));
+		RunsafeInventory inventory = server.createInventory(null, 27, String.format("%s's Mailbox", player.getName()));
 
-		String data = this.database.queryString("SELECT contents FROM player_mailboxes WHERE player = ?", playerName);
+		String data = this.database.queryString("SELECT contents FROM player_mailboxes WHERE player = ?", player.getUniqueId().toString());
 		if (data != null)
 			inventory.unserialize(data);
 
@@ -38,10 +39,11 @@ public class MailboxRepository extends Repository
 		String contents = inventory.serialize();
 		this.database.execute(
 			"INSERT INTO player_mailboxes (player, contents) VALUES(?, ?) ON DUPLICATE KEY UPDATE contents = ?",
-			player.getName(), contents, contents
+			player.getUniqueId().toString(), contents, contents
 		);
 	}
 
+	@Nonnull
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
 	{
@@ -53,6 +55,15 @@ public class MailboxRepository extends Repository
 				"`contents` longtext," +
 				"PRIMARY KEY (`player`)" +
 			")"
+		);
+
+		update.addQueries(
+			String.format( // Update UUIDs
+				"UPDATE IGNORE `%s` SET `player` = " +
+					"COALESCE((SELECT `uuid` FROM player_db WHERE `name`=`%s`.`player`), `player`) " +
+					"WHERE length(`player`) != 36",
+				getTableName(), getTableName()
+			)
 		);
 
 		return update;

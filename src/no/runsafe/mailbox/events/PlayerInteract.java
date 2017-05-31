@@ -1,8 +1,10 @@
 package no.runsafe.mailbox.events;
 
+import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClickBlock;
+import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEvent;
@@ -10,7 +12,7 @@ import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.mailbox.MailHandler;
 import no.runsafe.mailbox.MailboxBlocks;
 
-public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBlock
+public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBlock, IConfigurationChanged
 {
 	public PlayerInteract(MailHandler mailHandler, MailboxBlocks blocks)
 	{
@@ -19,8 +21,17 @@ public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBl
 	}
 
 	@Override
+	public void OnConfigurationChanged(IConfiguration configuration)
+	{
+		this.mailUniverse = configuration.getConfigValueAsString("mailUniverse");
+	}
+
+	@Override
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
+		if (!mailUniverse.equals(event.getPlayer().getWorld().getUniverse().getName()))
+			return;
+
 		if (event.hasItem())
 		{
 			RunsafeMeta item = event.getItemStack();
@@ -52,4 +63,5 @@ public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBl
 
 	private final MailHandler mailHandler;
 	private final MailboxBlocks blocks;
+	private String mailUniverse;
 }

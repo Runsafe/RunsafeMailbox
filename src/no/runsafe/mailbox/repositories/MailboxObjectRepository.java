@@ -2,20 +2,20 @@ package no.runsafe.mailbox.repositories;
 
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
-import no.runsafe.framework.api.database.IDatabase;
 import no.runsafe.framework.api.database.ISchemaUpdate;
 import no.runsafe.framework.api.database.Repository;
 import no.runsafe.framework.api.database.SchemaUpdate;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class MailboxObjectRepository extends Repository
 {
-	public MailboxObjectRepository(IDatabase database)
+	public MailboxObjectRepository()
 	{
-		this.database = database;
 	}
 
+	@Nonnull
 	@Override
 	public String getTableName()
 	{
@@ -32,6 +32,7 @@ public class MailboxObjectRepository extends Repository
 		return database.queryLocations("SELECT `world`, `x`, `y`, `z` FROM `mailbox_blocks` WHERE world=?", world.getName());
 	}
 
+	@Nonnull
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
 	{
@@ -46,7 +47,4 @@ public class MailboxObjectRepository extends Repository
 
 		return update;
 	}
-
-	private final IDatabase database;
-
 }
