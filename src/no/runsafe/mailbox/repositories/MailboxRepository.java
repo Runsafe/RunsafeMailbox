@@ -58,6 +58,7 @@ public class MailboxRepository extends Repository
 		);
 
 		update.addQueries(
+			String.format("DELETE FROM `%s` WHERE `contents` = 'contents: {}\n'", getTableName()),
 			String.format( // Update UUIDs
 				"UPDATE IGNORE `%s` SET `player` = " +
 					"COALESCE((SELECT `uuid` FROM player_db WHERE `name`=`%s`.`player`), `player`) " +
