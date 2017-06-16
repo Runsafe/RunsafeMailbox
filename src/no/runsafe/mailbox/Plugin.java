@@ -5,9 +5,7 @@ import no.runsafe.framework.api.command.Command;
 import no.runsafe.framework.features.Commands;
 import no.runsafe.framework.features.Database;
 import no.runsafe.framework.features.Events;
-import no.runsafe.mailbox.commands.SendBook;
-import no.runsafe.mailbox.commands.SendMail;
-import no.runsafe.mailbox.commands.ViewMailbox;
+import no.runsafe.mailbox.commands.*;
 import no.runsafe.mailbox.events.CloseInventory;
 import no.runsafe.mailbox.events.InventoryClick;
 import no.runsafe.mailbox.events.PlayerInteract;
@@ -47,6 +45,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		// Commands
 		Command mailCommand = new Command("mail", "Mail related commands", null);
 		mailCommand.addSubCommand(getInstance(ViewMailbox.class));
+		mailCommand.addSubCommand(getInstance(ViewOtherMailbox.class));
 		mailCommand.addSubCommand(getInstance(SendMail.class));
 		mailCommand.addSubCommand(getInstance(SendBook.class));
 		this.addComponent(mailCommand);

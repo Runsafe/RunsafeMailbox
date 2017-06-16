@@ -39,7 +39,10 @@ public class MailHandler implements IConfigurationChanged
 		}
 		else
 		{
-			viewer.sendColouredMessage("&eYour mailbox is empty!");
+			if (viewer.equals(mailboxOwner))
+				viewer.sendColouredMessage("&eYour mailbox is empty!");
+			else
+				viewer.sendColouredMessage(mailboxOwner.getPrettyName() + "&e's mailbox is empty!");
 		}
 	}
 
