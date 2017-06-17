@@ -38,7 +38,7 @@ public class MailboxBlocks implements IServerReady, IWorldLoad
 				continue;
 			String worldName = addLocation.getWorld().getName();
 			if (!blockLocations.containsKey(worldName))
-				blockLocations.put(worldName, new ArrayList<ILocation>(0));
+				blockLocations.put(worldName, new ArrayList<>(0));
 			blockLocations.get(worldName).add(addLocation);
 		}
 	}
@@ -48,12 +48,12 @@ public class MailboxBlocks implements IServerReady, IWorldLoad
 	{
 		String worldName = world.getName();
 		if (!blockLocations.containsKey(worldName))
-			blockLocations.put(worldName, new ArrayList<ILocation>(0));
+			blockLocations.put(worldName, new ArrayList<>(0));
 
 		for (ILocation addLocation : repository.getBlockLocations(world))
 			blockLocations.get(worldName).add(addLocation);
 	}
 
-	private HashMap<String, List<ILocation>> blockLocations = new HashMap<String, List<ILocation>>(0);
+	private HashMap<String, List<ILocation>> blockLocations = new HashMap<>(0);
 	private final MailboxObjectRepository repository;
 }

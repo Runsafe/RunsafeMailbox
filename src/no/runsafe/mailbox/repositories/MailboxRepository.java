@@ -27,7 +27,7 @@ public class MailboxRepository extends Repository
 	{
 		RunsafeInventory inventory = server.createInventory(null, 27, String.format("%s's Mailbox", player.getName()));
 
-		String data = this.database.queryString("SELECT contents FROM player_mailboxes WHERE player = ?", player.getUniqueId().toString());
+		String data = this.database.queryString("SELECT contents FROM player_mailboxes WHERE player = ?", player);
 		if (data != null)
 			inventory.unserialize(data);
 
@@ -39,7 +39,14 @@ public class MailboxRepository extends Repository
 		String contents = inventory.serialize();
 		this.database.execute(
 			"INSERT INTO player_mailboxes (player, contents) VALUES(?, ?) ON DUPLICATE KEY UPDATE contents = ?",
-			player.getUniqueId().toString(), contents, contents
+			player, contents, contents
+		);
+	}
+
+	public void removeMailbox(IPlayer owner)
+	{
+		this.database.execute(
+			"DELETE IGNORE FROM `player_mailboxes` WHERE player = ?", owner
 		);
 	}
 
