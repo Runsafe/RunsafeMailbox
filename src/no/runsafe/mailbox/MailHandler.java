@@ -79,11 +79,12 @@ public class MailHandler implements IConfigurationChanged
 		this.openMailbox(viewer, owner);
 	}
 
-	public void handleMailboxClose(IPlayer owner)
+	public void handleMailboxClose(IPlayer viewer)
 	{
 		boolean hasRemoved = false;
-		RunsafeInventory mailbox = this.openMailboxes.get(owner).getMailbox();
-		for (RunsafeMeta itemStack : mailbox.getContents())
+		MailView mailbox = this.openMailboxes.get(viewer);
+		RunsafeInventory mailboxInventory = mailbox.getMailbox();
+		for (RunsafeMeta itemStack : mailboxInventory.getContents())
 		{
 			if (itemStack.is(Item.Decoration.Chest))
 			{
@@ -100,18 +101,18 @@ public class MailHandler implements IConfigurationChanged
 			}
 
 			hasRemoved = true;
-			mailbox.remove(itemStack);
-			owner.getWorld().dropItem(owner.getLocation(), itemStack);
+			mailboxInventory.remove(itemStack);
+			viewer.getWorld().dropItem(viewer.getLocation(), itemStack);
 		}
 
 		if (hasRemoved)
-			owner.sendColouredMessage("&cThe mailbox growls and spits your items onto the floor.");
+			viewer.sendColouredMessage("&cThe mailbox growls and spits your items onto the floor.");
 
-		if (mailbox.isEmpty())
-			this.mailboxRepository.removeMailbox(owner);
+		if (mailboxInventory.isEmpty())
+			this.mailboxRepository.removeMailbox(mailbox.getOwner());
 		else
-			this.mailboxRepository.updateMailbox(owner, mailbox);
-		this.closeMailbox(owner);
+			this.mailboxRepository.updateMailbox(mailbox.getOwner(), mailboxInventory);
+		this.closeMailbox(viewer);
 	}
 
 	public String sendOutstandingMail(IPlayer sender)
