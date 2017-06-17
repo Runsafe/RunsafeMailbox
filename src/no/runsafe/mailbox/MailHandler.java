@@ -107,7 +107,10 @@ public class MailHandler implements IConfigurationChanged
 		if (hasRemoved)
 			owner.sendColouredMessage("&cThe mailbox growls and spits your items onto the floor.");
 
-		this.mailboxRepository.updateMailbox(owner, mailbox);
+		if (mailbox.isEmpty())
+			this.mailboxRepository.removeMailbox(owner);
+		else
+			this.mailboxRepository.updateMailbox(owner, mailbox);
 		this.closeMailbox(owner);
 	}
 

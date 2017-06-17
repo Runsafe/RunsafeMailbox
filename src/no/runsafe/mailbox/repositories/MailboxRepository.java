@@ -43,6 +43,13 @@ public class MailboxRepository extends Repository
 		);
 	}
 
+	public void removeMailbox(IPlayer owner)
+	{
+		this.database.execute(
+			"DELETE IGNORE FROM `player_mailboxes` WHERE player = ?", owner
+		);
+	}
+
 	@Nonnull
 	@Override
 	public ISchemaUpdate getSchemaUpdateQueries()
