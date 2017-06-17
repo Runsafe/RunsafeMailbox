@@ -157,7 +157,7 @@ public class MailHandler implements IConfigurationChanged
 		RunsafeInventory mailPackage = this.mailPackageRepository.getMailPackage(packageID);
 		RunsafeInventory playerInventory = player.getInventory();
 		boolean sendWarning = false;
-		HashMap<String, Integer> yield = new HashMap<String, Integer>();
+		HashMap<String, Integer> yield = new HashMap<>();
 
 		for (RunsafeMeta itemStack : mailPackage.getContents())
 		{
@@ -272,8 +272,8 @@ public class MailHandler implements IConfigurationChanged
 	}
 
 	private final MailSender mailSender;
-	public final HashMap<String, MailView> openMailboxes = new HashMap<String, MailView>();
-	public final HashMap<String, MailSendAgent> openSendAgents = new HashMap<String, MailSendAgent>();
+	public final HashMap<String, MailView> openMailboxes = new HashMap<>();
+	public final HashMap<String, MailSendAgent> openSendAgents = new HashMap<>();
 	private final MailboxRepository mailboxRepository;
 	private final MailPackageRepository mailPackageRepository;
 	private final IServer server;
