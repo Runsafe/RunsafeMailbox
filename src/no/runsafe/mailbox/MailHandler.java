@@ -272,8 +272,8 @@ public class MailHandler implements IConfigurationChanged
 	}
 
 	private final MailSender mailSender;
-	public final HashMap<IPlayer, MailView> openMailboxes = new HashMap<>();
-	public final HashMap<IPlayer, MailSendAgent> openSendAgents = new HashMap<>();
+	private final HashMap<IPlayer, MailView> openMailboxes = new HashMap<>();
+	private final HashMap<IPlayer, MailSendAgent> openSendAgents = new HashMap<>();
 	private final MailboxRepository mailboxRepository;
 	private final MailPackageRepository mailPackageRepository;
 	private final IServer server;
