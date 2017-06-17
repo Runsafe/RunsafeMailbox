@@ -34,7 +34,7 @@ public class MailHandler implements IConfigurationChanged
 
 		if (inventory.getContents().size() > 0)
 		{
-			this.openMailboxes.put(viewer.getName(), new MailView(mailboxOwner.getName(), inventory, viewer));
+			this.openMailboxes.put(viewer, new MailView(mailboxOwner, inventory, viewer));
 			viewer.openInventory(inventory);
 		}
 		else
@@ -50,25 +50,25 @@ public class MailHandler implements IConfigurationChanged
 	{
 		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText() + ".");
 		RunsafeInventory inventory = server.createInventory(null, 54, "Mail to " + recipient.getName());
-		this.openSendAgents.put(sender.getName(), new MailSendAgent(recipient, inventory));
+		this.openSendAgents.put(sender, new MailSendAgent(recipient, inventory));
 		sender.openInventory(inventory);
 	}
 
 	public boolean isViewingSendAgent(IPlayer sender)
 	{
-		return this.openSendAgents.containsKey(sender.getName());
+		return this.openSendAgents.containsKey(sender);
 	}
 
 	public boolean isViewingMailbox(IPlayer viewer)
 	{
-		return this.openMailboxes.containsKey(viewer.getName());
+		return this.openMailboxes.containsKey(viewer);
 	}
 
 	public void closeMailbox(IPlayer viewer)
 	{
 		if (this.isViewingMailbox(viewer))
 		{
-			this.openMailboxes.remove(viewer.getName());
+			this.openMailboxes.remove(viewer);
 			viewer.closeInventory(); // Force close in-case called from outside of an event.
 		}
 	}
@@ -82,7 +82,7 @@ public class MailHandler implements IConfigurationChanged
 	public void handleMailboxClose(IPlayer owner)
 	{
 		boolean hasRemoved = false;
-		RunsafeInventory mailbox = this.openMailboxes.get(owner.getName()).getMailbox();
+		RunsafeInventory mailbox = this.openMailboxes.get(owner).getMailbox();
 		for (RunsafeMeta itemStack : mailbox.getContents())
 		{
 			if (itemStack.is(Item.Decoration.Chest))
@@ -115,7 +115,7 @@ public class MailHandler implements IConfigurationChanged
 	{
 		if (this.isViewingSendAgent(sender))
 		{
-			MailSendAgent agent = this.openSendAgents.get(sender.getName());
+			MailSendAgent agent = this.openSendAgents.get(sender);
 			this.removeAgent(sender);
 
 			// Check player can afford to send mail
@@ -230,7 +230,7 @@ public class MailHandler implements IConfigurationChanged
 
 	public void removeAgent(IPlayer sender)
 	{
-		this.openSendAgents.remove(sender.getName());
+		this.openSendAgents.remove(sender);
 	}
 
 	public boolean hasMailCost(IPlayer player)
@@ -257,8 +257,8 @@ public class MailHandler implements IConfigurationChanged
 
 	private void refreshMailboxViewers(IPlayer owner)
 	{
-		for (Map.Entry<String, MailView> openMailbox : this.openMailboxes.entrySet())
-			if (openMailbox.getKey().equals(owner.getName()))
+		for (Map.Entry<IPlayer, MailView> openMailbox : this.openMailboxes.entrySet())
+			if (openMailbox.getKey().equals(owner))
 				this.refreshMailbox(openMailbox.getValue().getViewer(), owner);
 	}
 
@@ -272,8 +272,8 @@ public class MailHandler implements IConfigurationChanged
 	}
 
 	private final MailSender mailSender;
-	public final HashMap<String, MailView> openMailboxes = new HashMap<>();
-	public final HashMap<String, MailSendAgent> openSendAgents = new HashMap<>();
+	public final HashMap<IPlayer, MailView> openMailboxes = new HashMap<>();
+	public final HashMap<IPlayer, MailSendAgent> openSendAgents = new HashMap<>();
 	private final MailboxRepository mailboxRepository;
 	private final MailPackageRepository mailPackageRepository;
 	private final IServer server;

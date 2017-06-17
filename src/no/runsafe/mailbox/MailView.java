@@ -5,14 +5,14 @@ import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 public class MailView
 {
-	public MailView(String owner, RunsafeInventory mailbox, IPlayer viewer)
+	public MailView(IPlayer owner, RunsafeInventory mailbox, IPlayer viewer)
 	{
 		this.owner = owner;
 		this.mailbox = mailbox;
 		this.viewer = viewer;
 	}
 
-	public String getOwner()
+	public IPlayer getOwner()
 	{
 		return this.owner;
 	}
@@ -27,7 +27,7 @@ public class MailView
 		return this.viewer;
 	}
 
-	private final String owner;
+	private final IPlayer owner;
 	private final RunsafeInventory mailbox;
 	private final IPlayer viewer;
 }
