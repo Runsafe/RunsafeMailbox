@@ -48,7 +48,7 @@ public class MailHandler implements IConfigurationChanged
 
 	public void openMailSender(IPlayer sender, IPlayer recipient)
 	{
-		sender.sendColouredMessage("&3Sending mail will cost " + this.getMailCostText() + ".");
+		sender.sendColouredMessage("&3Sending a magic parcel will cost " + this.getMailCostText() + ".");
 		RunsafeInventory inventory = server.createInventory(null, 54, "Mail to " + recipient.getName());
 		this.openSendAgents.put(sender, new MailSendAgent(recipient, inventory));
 		sender.openInventory(inventory);
@@ -91,7 +91,7 @@ public class MailHandler implements IConfigurationChanged
 				String displayName = itemStack.getDisplayName();
 
 				if (displayName != null)
-					if (displayName.startsWith("Mail Package #"))
+					if (displayName.startsWith("Magic Parcel #"))
 						continue;
 			}
 			else if (itemStack.is(Item.Special.Crafted.WrittenBook))
@@ -127,7 +127,7 @@ public class MailHandler implements IConfigurationChanged
 			{
 				this.returnGoodsFromAgent(sender, agent);
 				this.removeAgent(sender);
-				return "&cYou do not have enough money to send mail. Sending mail costs " + this.getMailCostText() + ".";
+				return "&cYou do not have enough money to send a magic parcel. Sending pacels costs " + this.getMailCostText() + ".";
 			}
 
 			IPlayer recipient = agent.getRecipient();
@@ -137,7 +137,7 @@ public class MailHandler implements IConfigurationChanged
 			{
 				this.returnGoodsFromAgent(sender, agent);
 				this.removeAgent(sender);
-				return "&cThe recipient cannot accept mail at this point.";
+				return "&cThat recipient cannot receive magic parcels at this point.";
 			}
 
 			this.removeMailCost(sender); // YOINK.
@@ -145,7 +145,7 @@ public class MailHandler implements IConfigurationChanged
 			this.mailSender.sendMail(recipient, sender.getName(), agent.getInventory());
 			this.refreshMailboxViewers(recipient);
 
-			return "&2Mail sent successfully.";
+			return "&2Magic Parcel sent successfully.";
 		}
 		return null;
 	}
@@ -186,7 +186,7 @@ public class MailHandler implements IConfigurationChanged
 		player.updateInventory();
 
 		for (Map.Entry<String, Integer> result : yield.entrySet())
-			player.sendColouredMessage(String.format("&3Gained %sx %s from package.", result.getValue(), result.getKey()));
+			player.sendColouredMessage(String.format("&3Gained %sx %s from parcel.", result.getValue(), result.getKey()));
 
 		if (sendWarning)
 			player.sendColouredMessage("&3Your inventory is full, some of the items from the package have been dropped at your feet.");
