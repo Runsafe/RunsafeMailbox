@@ -40,7 +40,7 @@ public class MailSender
 	private void sendNotification(IPlayer player)
 	{
 		if (player.isOnline())
-			player.sendColouredMessage("&3You just received mail!");
+			player.sendColouredMessage("&3You just received a magic parcel!");
 	}
 
 	public boolean hasFreeMailboxSpace(IPlayer mailboxOwner)
