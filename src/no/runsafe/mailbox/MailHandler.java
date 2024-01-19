@@ -127,7 +127,7 @@ public class MailHandler implements IConfigurationChanged
 			{
 				this.returnGoodsFromAgent(sender, agent);
 				this.removeAgent(sender);
-				return "&cYou do not have enough money to send a magic parcel. Sending pacels costs " + this.getMailCostText() + ".";
+				return "&cYou do not have enough money to send a magic parcel. Sending parcels costs " + this.getMailCostText() + ".";
 			}
 
 			IPlayer recipient = agent.getRecipient();
