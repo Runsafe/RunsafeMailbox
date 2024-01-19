@@ -9,7 +9,7 @@ public class ViewMailbox extends PlayerCommand
 {
 	public ViewMailbox(MailHandler mailHandler)
 	{
-		super("view", "Views a players magic parcels.", "runsafe.mailbox.admin.view");
+		super("view", "Views a players magic parcels", "runsafe.mailbox.admin.view");
 		this.mailHandler = mailHandler;
 	}
 
