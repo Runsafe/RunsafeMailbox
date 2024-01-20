@@ -27,13 +27,13 @@ public class SendBook extends PlayerCommand
 			return null;
 
 		if (player.getName().equalsIgnoreCase(executor.getName()))
-			return "&cYou cannot mail things to yourself.";
+			return "&cYou cannot send parcels to yourself.";
 
 		if (!this.mailHandler.hasMailBookCost(executor))
 			return "&cYou do not have enough money to send a book. Sending books costs " + this.mailHandler.getMailBookCostText() + ".";
 
 		if (!this.mailSender.hasFreeMailboxSpace(player))
-			return "&cThat player cannot receive mail right now.";
+			return "&cThat player cannot receive magic parcels right now.";
 
 		RunsafeMeta itemInHand = executor.getItemInHand();
 		if (itemInHand == null || !itemInHand.is(Item.Special.Crafted.WrittenBook))

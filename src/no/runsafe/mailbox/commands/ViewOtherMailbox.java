@@ -12,7 +12,7 @@ public class ViewOtherMailbox extends PlayerCommand
 	{
 		super(
 			"viewOther",
-			"Views a players mailbox",
+			"Views a players magic parcels",
 			"runsafe.mailbox.admin.viewOther",
 			new Player(PLAYER).require()
 		);

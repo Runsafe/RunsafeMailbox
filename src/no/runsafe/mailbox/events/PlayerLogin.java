@@ -17,7 +17,7 @@ public class PlayerLogin implements IPlayerJoinEvent
 	{
 		IPlayer player = event.getPlayer();
 		int mailCount = mailHandler.getInboxCount(player);
-		player.sendColouredMessage("%sYou have %d packages in your mailbox!", (mailCount > 0 ? "&a" : "&c"), mailCount);
+		player.sendColouredMessage("%sYou have %d magic parcels in your mailbox!", (mailCount > 0 ? "&a" : "&c"), mailCount);
 	}
 
 	private final MailHandler mailHandler;

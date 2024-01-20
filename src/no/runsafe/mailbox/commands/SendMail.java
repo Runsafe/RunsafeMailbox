@@ -11,7 +11,7 @@ public class SendMail extends PlayerCommand
 {
 	public SendMail(MailHandler mailHandler, MailSender mailSender)
 	{
-		super("send", "Sends mail to another player", "runsafe.mailbox.send", new Player().require());
+		super("send", "Sends a magic parcel to another player", "runsafe.mailbox.send", new Player().require());
 		this.mailHandler = mailHandler;
 		this.mailSender = mailSender;
 	}
@@ -25,13 +25,13 @@ public class SendMail extends PlayerCommand
 			return null;
 
 		if (player.getName().equals(executor.getName()))
-			return "&cYou cannot send mail to yourself.";
+			return "&cYou cannot send parcels to yourself.";
 
 		if (!this.mailHandler.hasMailCost(executor))
-			return "&cYou do not have enough money to send mail. Sending mail costs " + this.mailHandler.getMailCostText() + ".";
+			return "&cYou do not have enough money to send a magic parcel. Sending parcels costs " + this.mailHandler.getMailCostText() + ".";
 
 		if (!this.mailSender.hasFreeMailboxSpace(player))
-			return "&cThat player cannot receive mail right now.";
+			return "&cThat player cannot receive magic parcels right now.";
 
 		this.mailHandler.openMailSender(executor, player);
 		return null;
