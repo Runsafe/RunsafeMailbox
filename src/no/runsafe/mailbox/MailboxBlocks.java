@@ -54,6 +54,6 @@ public class MailboxBlocks implements IServerReady, IWorldLoad
 			blockLocations.get(worldName).add(addLocation);
 	}
 
-	private HashMap<String, List<ILocation>> blockLocations = new HashMap<>(0);
+	private final HashMap<String, List<ILocation>> blockLocations = new HashMap<>(0);
 	private final MailboxObjectRepository repository;
 }

@@ -2,6 +2,7 @@ package no.runsafe.mailbox;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IServer;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
@@ -32,7 +33,7 @@ public class MailHandler implements IConfigurationChanged
 	{
 		RunsafeInventory inventory = this.mailboxRepository.getMailbox(mailboxOwner);
 
-		if (inventory.getContents().size() > 0)
+		if (!inventory.getContents().isEmpty())
 		{
 			this.openMailboxes.put(viewer, new MailView(mailboxOwner, inventory, viewer));
 			viewer.openInventory(inventory);
@@ -84,6 +85,9 @@ public class MailHandler implements IConfigurationChanged
 		boolean hasRemoved = false;
 		MailView mailbox = this.openMailboxes.get(viewer);
 		RunsafeInventory mailboxInventory = mailbox.getMailbox();
+		IWorld world = viewer.getWorld();
+		if (world == null)
+			return;
 		for (RunsafeMeta itemStack : mailboxInventory.getContents())
 		{
 			if (itemStack.is(Item.Decoration.Chest))
@@ -102,7 +106,7 @@ public class MailHandler implements IConfigurationChanged
 
 			hasRemoved = true;
 			mailboxInventory.remove(itemStack);
-			viewer.getWorld().dropItem(viewer.getLocation(), itemStack);
+			world.dropItem(viewer.getLocation(), itemStack);
 		}
 
 		if (hasRemoved)
@@ -162,7 +166,9 @@ public class MailHandler implements IConfigurationChanged
 		RunsafeInventory playerInventory = player.getInventory();
 		boolean sendWarning = false;
 		HashMap<String, Integer> yield = new HashMap<>();
-
+		IWorld world = player.getWorld();
+		if (world == null)
+			return;
 		for (RunsafeMeta itemStack : mailPackage.getContents())
 		{
 			String displayName = itemStack.getDisplayName();
@@ -180,7 +186,7 @@ public class MailHandler implements IConfigurationChanged
 			else
 			{
 				sendWarning = true;
-				player.getWorld().dropItem(player.getLocation(), itemStack);
+				world.dropItem(player.getLocation(), itemStack);
 			}
 		}
 		player.updateInventory();
@@ -215,6 +221,9 @@ public class MailHandler implements IConfigurationChanged
 	{
 		RunsafeInventory inventory = player.getInventory();
 		boolean sendWarning = false;
+		IWorld world = player.getWorld();
+		if (world == null)
+			return;
 		for (RunsafeMeta itemStack : agent.getInventory().getContents())
 		{
 			if (inventory.getContents().size() < inventory.getSize())
@@ -222,7 +231,7 @@ public class MailHandler implements IConfigurationChanged
 			else
 			{
 				sendWarning = true;
-				player.getWorld().dropItem(player.getLocation(), itemStack);
+				world.dropItem(player.getLocation(), itemStack);
 			}
 		}
 

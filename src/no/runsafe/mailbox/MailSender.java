@@ -26,7 +26,9 @@ public class MailSender
 
 	public void sendItemInHand(IPlayer recipient, IPlayer executor)
 	{
-		RunsafeMeta item = executor.getItemInHand();
+		RunsafeMeta item = executor.getItemInMainHand();
+		if (item == null)
+			return;
 		item.addLore("Sent by " + executor.getName());
 
 		RunsafeInventory mailbox = this.mailboxRepository.getMailbox(recipient);

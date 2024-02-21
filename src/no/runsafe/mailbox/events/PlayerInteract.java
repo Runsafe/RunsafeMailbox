@@ -1,6 +1,7 @@
 package no.runsafe.mailbox.events;
 
 import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.IUniverse;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.event.player.IPlayerInteractEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClickBlock;
@@ -29,7 +30,8 @@ public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBl
 	@Override
 	public void OnPlayerInteractEvent(RunsafePlayerInteractEvent event)
 	{
-		if (!mailUniverse.equals(event.getPlayer().getWorld().getUniverse().getName()))
+		IUniverse universe = event.getPlayer().getUniverse();
+		if (universe == null || !mailUniverse.equals(universe.getName()))
 			return;
 
 		if (event.hasItem())
@@ -42,7 +44,7 @@ public class PlayerInteract implements IPlayerInteractEvent, IPlayerRightClickBl
 				{
 					IPlayer player = event.getPlayer();
 					String[] split = displayName.split("#");
-					this.mailHandler.openPackage(player, Integer.valueOf(split[1]));
+					this.mailHandler.openPackage(player, Integer.parseInt(split[1]));
 					player.getInventory().remove(item);
 					event.cancel();
 				}
