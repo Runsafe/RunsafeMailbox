@@ -127,7 +127,7 @@ public class MailHandler implements IConfigurationChanged
 			this.removeAgent(sender);
 
 			// Check player can afford to send mail
-			if (!this.hasMailCost(sender))
+			if (this.cannotAffordMail(sender))
 			{
 				this.returnGoodsFromAgent(sender, agent);
 				this.removeAgent(sender);
@@ -246,9 +246,9 @@ public class MailHandler implements IConfigurationChanged
 		this.openSendAgents.remove(sender);
 	}
 
-	public boolean hasMailCost(IPlayer player)
+	public boolean cannotAffordMail(IPlayer player)
 	{
-		return player.hasItem(this.mailSendCurrency, this.mailSendCost);
+		return !player.hasItem(this.mailSendCurrency, this.mailSendCost);
 	}
 
 	public boolean hasMailBookCost(IPlayer player)
