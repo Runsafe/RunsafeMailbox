@@ -35,7 +35,7 @@ public class SendBook extends PlayerCommand
 		if (!this.mailSender.hasFreeMailboxSpace(player))
 			return "&cThat player cannot receive magic parcels right now.";
 
-		RunsafeMeta itemInHand = executor.getItemInHand();
+		RunsafeMeta itemInHand = executor.getItemInMainHand();
 		if (itemInHand == null || !itemInHand.is(Item.Special.Crafted.WrittenBook))
 			return "&cYou must be holding a written book.";
 
