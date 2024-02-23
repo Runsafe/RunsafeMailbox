@@ -70,7 +70,7 @@ public class MailHandler implements IConfigurationChanged
 		if (this.isViewingMailbox(viewer))
 		{
 			this.openMailboxes.remove(viewer);
-			viewer.closeInventory(); // Force close in-case called from outside of an event.
+			viewer.closeInventory(); // Force close in-case called from outside an event.
 		}
 	}
 
