@@ -2,7 +2,7 @@ name: RunsafeMailbox
 main: no.runsafe.mailbox.Plugin
 version: 1.0.@BUILD@
 author: Kruithne
-description:
+description: 'Just some mail'
 commands:
   mail:
     description: Mail related commands
