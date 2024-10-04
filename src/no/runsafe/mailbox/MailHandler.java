@@ -179,10 +179,8 @@ public class MailHandler implements IConfigurationChanged
 			else
 				yield.put(displayName, itemStack.getAmount());
 
-			if (playerInventory.getContents().size() < playerInventory.getSize())
-			{
+			if (player.getInventoryFreeSpaces() > 0)
 				playerInventory.addItems(itemStack);
-			}
 			else
 			{
 				sendWarning = true;
